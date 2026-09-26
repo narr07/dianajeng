@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#0b0a0c"/>
+<title>Kenny &amp; Amanda — Wedding Invitation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italianno&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============ BASE ============ */
+:root{
+  --bg:#0b0a0c; --panel:#141316;
+  --cream:#EDE7DC; --cream-60:rgba(237,231,220,.62); --cream-40:rgba(237,231,220,.4);
+  --line:rgba(237,231,220,.16);
+  --maroon:#B32539;
+  --serif:'Cormorant Garamond',serif; --sans:'Jost',sans-serif; --script:'Italianno',cursive;
+  color-scheme:dark;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--bg);scrollbar-width:none;overflow-x:clip}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:0}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;overflow-x:clip}
+body.lock{overflow:hidden;height:100dvh}
+img{display:block;user-select:none;-webkit-user-drag:none}
+::selection{background:rgba(179,37,57,.55)}
+a{color:inherit}
+
+#app{position:relative;max-width:480px;margin:0 auto;background:var(--panel);min-height:100vh;box-shadow:0 0 70px rgba(0,0,0,.65)}
+
+/* ============ UTIL ============ */
+.sec{padding:72px 26px;text-align:center}
+.sec.full{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-size:11px;font-weight:300;letter-spacing:.42em;text-transform:uppercase;color:var(--cream-60)}
+.sec-sub{font-size:13.5px;font-weight:300;line-height:1.85;color:var(--cream-60);max-width:34ch;margin:6px auto 0}
+
+.script-title{font-family:var(--script);font-weight:400;font-size:clamp(52px,14vw,66px);line-height:1.15;color:var(--cream);margin-bottom:10px}
+.st-mask{display:inline-block;overflow:hidden;vertical-align:bottom;padding:.06em .12em .22em;margin:-.06em -.12em -.22em}
+.st-inner{display:inline-block}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:320px;padding:15px 22px;border-radius:999px;
+  font:300 11.5px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--cream);cursor:pointer;text-decoration:none;
+  border:1px solid var(--line);background:rgba(237,231,220,.05);transition:transform .25s,background .25s}
+.btn:active{transform:scale(.97)}
+.btn-red{background:linear-gradient(180deg,#B32539,#7E1322);border-color:transparent;color:#fff;box-shadow:0 16px 34px -16px rgba(179,37,57,.6)}
+.btn-solid{background:rgba(237,231,220,.08)}
+.btn svg{width:14px;height:14px}
+
+.ph-mask{clip-path:inset(0% 0% 0% 0% round 18px);border-radius:18px;overflow:hidden}
+.ph-mask img{width:100%;height:100%;object-fit:cover}
+
+.parallax{position:absolute;inset:0;overflow:hidden}
+.parallax img{position:absolute;left:-9%;top:-9%;width:118%;height:118%;object-fit:cover;will-change:transform}
+
+/* ============ COVER ============ */
+.cover{position:absolute;top:0;left:0;right:0;height:100vh;height:100dvh;z-index:70;display:grid;place-items:center;text-align:center;overflow:hidden;clip-path:inset(0% 0% 0% 0%)}
+.cover-bg{position:absolute;inset:0}
+.cover-bg img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.cover-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,12,.68),rgba(11,10,12,.38) 45%,rgba(11,10,12,.82))}
+.cover-inner{position:relative;z-index:2;padding:30px;display:flex;flex-direction:column;align-items:center}
+.cover-pre{font:300 12px var(--sans);letter-spacing:.42em;text-transform:uppercase;color:var(--cream-60)}
+.cover-names{font-family:var(--script);font-weight:400;font-size:clamp(62px,19vw,92px);line-height:.92;margin:16px 0 26px}
+.cover-names .cn{display:block}
+.cover-dear p:first-child{font:300 11px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--cream-60)}
+.guest-name{font:400 19px var(--serif);letter-spacing:.16em;text-transform:uppercase;margin-top:7px}
+.cover-dear{margin-bottom:28px}
+.open-btn{min-width:min(300px,84vw);padding:16px 26px;border-radius:999px;border:1px solid rgba(237,231,220,.35);
+  background:rgba(12,11,13,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:var(--cream);font:300 12px var(--sans);letter-spacing:.34em;text-transform:uppercase;cursor:pointer;transition:background .3s}
+.open-btn:hover{background:rgba(12,11,13,.72)}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+.hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(11,10,12,.62),rgba(11,10,12,.22) 36%,rgba(11,10,12,.16) 58%,rgba(11,10,12,.84))}
+.hero-content{position:relative;z-index:2;margin-top:19vh;text-align:center;padding:0 24px}
+.hero-names{font-family:var(--script);font-weight:400;font-size:clamp(56px,16vw,74px);line-height:1;margin-top:12px}
+.hn-amp{font-size:.6em;opacity:.85;margin:0 4px}
+.hero-date{margin-top:16px;font:300 11px var(--sans);letter-spacing:.5em;color:var(--cream-60)}
+.hero-quote{position:relative;z-index:2;margin-top:auto;margin-bottom:92px;text-align:center;padding:0 32px;max-width:360px}
+.hero-quote p{font:italic 300 15px/1.8 var(--serif)}
+.hero-quote span{display:block;margin-top:12px;font:300 9.5px var(--sans);letter-spacing:.34em;text-transform:uppercase;color:var(--cream-60)}
+.scroll-hint{position:absolute;z-index:2;bottom:24px;left:50%;transform:translateX(-50%)}
+.hint-line{display:block;width:1px;height:46px;background:rgba(237,231,220,.16);overflow:hidden;position:relative}
+.hint-line i{position:absolute;inset:0;background:var(--cream);transform:translateY(-110%)}
+.opened .hint-line i{animation:hintDown 2s cubic-bezier(.77,0,.18,1) infinite}
+@keyframes hintDown{0%{transform:translateY(-110%)}60%,100%{transform:translateY(110%)}}
+
+/* ============ MARQUEE ============ */
+.marquee{overflow:hidden;padding:26px 0;position:relative}
+.mq-track{display:inline-flex;align-items:center;gap:38px;width:max-content;white-space:nowrap;will-change:transform}
+.mq-track span{font:italic 300 clamp(38px,10vw,54px)/1.2 var(--serif);letter-spacing:.04em;
+  color:transparent;-webkit-text-stroke:1px rgba(237,231,220,.42)}
+.mq-track b{font-weight:400;color:var(--maroon);font-size:clamp(14px,4vw,18px)}
+
+/* ============ SAVE THE DATE ============ */
+.save-date{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+.sd-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(11,10,12,.4),rgba(11,10,12,.08) 45%,rgba(11,10,12,.86))}
+.sd-inner{position:relative;z-index:2;width:100%;padding:0 30px 76px}
+.sd-date{font:300 clamp(58px,19vw,88px)/0.92 var(--serif);letter-spacing:.02em}
+.sd-date .sd-r{display:block;will-change:transform}
+.sd-script{font-family:var(--script);font-size:clamp(36px,10vw,44px);margin-top:10px;opacity:.95}
+
+/* ============ COUPLE ============ */
+.person{padding:72px 26px;text-align:center;position:relative;min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  background:radial-gradient(62% 40% at 50% 36%,rgba(237,231,220,.07),transparent 70%),var(--panel)}
+.person-name{font:400 clamp(26px,7vw,31px) var(--serif);letter-spacing:.06em;margin-top:4px}
+.person-name i{font-style:normal;font-size:.72em;color:var(--cream-60)}
+.person-sub{margin-top:10px;font:300 11.5px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--cream-40)}
+.orb{width:min(62vw,290px);aspect-ratio:.86;margin:26px auto 24px;overflow:hidden;border-radius:48% 48% 46% 46%/42% 42% 40% 40%;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.85),0 0 0 1px var(--line),0 0 90px rgba(237,231,220,.08)}
+.orb img{width:100%;height:100%;object-fit:cover}
+.ig-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font:300 11px var(--sans);letter-spacing:.26em;text-transform:uppercase;
+  color:var(--cream-60);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:3px;transition:.3s}
+.ig-link:hover{color:var(--cream);border-color:var(--cream-40)}
+.ig-link svg{width:15px;height:15px}
+
+/* ============ COUNTDOWN ============ */
+.countdown{position:relative;overflow:hidden;text-align:center}
+.cd-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(11,10,12,.55),rgba(11,10,12,.35) 40%,rgba(11,10,12,.88))}
+.cd-content{position:relative;z-index:2;padding:72px 26px;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+.cd-forever{font:400 clamp(28px,9vw,40px) var(--serif);letter-spacing:.2em;text-transform:uppercase;margin-top:12px}
+.cd-timer{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line);margin:30px 0 34px}
+.t-cell{padding:18px 4px;text-align:center;border-right:1px solid var(--line)}
+.t-cell:last-child{border-right:0}
+.t-cell span{display:block;font:300 clamp(32px,9vw,42px)/1 var(--serif)}
+.t-cell small{display:block;margin-top:8px;font:300 9px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--cream-40)}
+.cd-day{font:300 11px var(--sans);letter-spacing:.42em;text-transform:uppercase;color:var(--cream-60)}
+.cd-date{font:400 clamp(24px,7.4vw,31px) var(--serif);letter-spacing:.1em;text-transform:uppercase;margin-top:12px}
+.cd-label{margin-top:12px;font:300 10px var(--sans);letter-spacing:.42em;text-transform:uppercase;color:var(--maroon);filter:brightness(1.35)}
+.cd-invite{margin:22px auto 0;font:300 13.5px/1.85 var(--sans);color:var(--cream-60);max-width:32ch}
+
+/* ============ EVENTS ============ */
+.ev-page{min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:80px 26px}
+.event-card{border:1px solid var(--line);border-radius:18px;padding:38px 26px;text-align:center;background:rgba(237,231,220,.025);width:100%;max-width:420px}
+.ev-title{font:400 clamp(25px,7.4vw,33px)/1.25 var(--serif);letter-spacing:.14em;text-transform:uppercase}
+.ev-time{margin-top:14px;font:300 12.5px var(--sans);letter-spacing:.34em;text-transform:uppercase;color:var(--cream-60)}
+.ev-venue{margin-top:16px;font:500 17px var(--serif);letter-spacing:.05em}
+.ev-addr{margin:9px auto 0;font:300 12.5px/1.7 var(--sans);color:var(--cream-40);max-width:32ch}
+.event-card .btn{margin-top:24px}
+
+/* ============ FORM ============ */
+form{text-align:left;margin-top:24px}
+.f-label{display:flex;justify-content:space-between;align-items:baseline;font:300 10px var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--cream-40);margin-bottom:9px}
+.f-label .count{font-style:normal;letter-spacing:.08em}
+.field{margin-bottom:16px}
+.field input,.field select,.field textarea{width:100%;background:rgba(237,231,220,.05);border:1px solid var(--line);border-radius:12px;
+  padding:13px 16px;color:var(--cream);font:300 14.5px var(--sans);outline:none;transition:border-color .25s;-webkit-appearance:none;appearance:none}
+.field textarea{min-height:88px;resize:none;line-height:1.6}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(237,231,220,.45)}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23EDE7DC' stroke-opacity='.55' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.radio{display:flex;gap:11px;align-items:center;padding:12px 15px;border:1px solid var(--line);border-radius:12px;cursor:pointer;font:300 13.5px var(--sans);transition:border-color .25s}
+.radio + .radio{margin-top:9px}
+.radio input{display:none}
+.radio .dot{width:15px;height:15px;border-radius:50%;border:1px solid var(--cream-40);position:relative;flex:none;transition:border-color .25s}
+.radio input:checked ~ .dot{border-color:var(--cream)}
+.radio input:checked ~ .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--cream)}
+.radio:has(input:checked){border-color:rgba(237,231,220,.5)}
+.form-ok{display:none;margin-top:16px;font:italic 400 14.5px var(--serif);text-align:center}
+
+/* ============ GALLERY HORIZONTAL ============ */
+.h-wrap{position:relative;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:22px;overflow:hidden;padding:60px 0 34px}
+.h-track{display:flex;align-items:center;gap:16px;padding:0 26px;width:max-content;will-change:transform}
+.h-card{flex:0 0 auto}
+.h-card img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+.h-photo{width:min(64vw,290px);height:min(52vh,410px)}
+.h-tall{width:min(56vw,255px);height:min(62vh,480px)}
+.h-intro{width:min(70vw,320px);padding-right:10px;text-align:left}
+.h-intro p{font:300 13.5px/1.8 var(--sans);color:var(--cream-60);max-width:26ch;margin-top:4px}
+.h-end{width:min(58vw,270px);text-align:center}
+.h-end .script-title{margin-bottom:4px}
+.h-end p{font:300 10.5px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--cream-40)}
+.swipe-hint{display:inline-flex;align-items:center;gap:9px;margin-top:22px;font:300 10px var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--cream-60)}
+.swipe-hint svg{width:26px;height:12px;animation:swipeArr 1.6s ease-in-out infinite}
+@keyframes swipeArr{0%,100%{transform:translateX(-5px);opacity:.5}50%{transform:translateX(5px);opacity:1}}
+.h-progress{height:2px;background:var(--line);margin:0 26px;border-radius:2px;overflow:hidden}
+.h-progress i{display:block;height:100%;width:100%;background:var(--cream);transform:scaleX(0);transform-origin:left}
+
+/* ============ LOVE STORY ============ */
+.story-page{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:72px 26px}
+.story-block{margin-top:36px;text-align:left}
+.story-block.right{text-align:right}
+.story-photo{width:76%;aspect-ratio:4/3.1;overflow:hidden;border-radius:18px;will-change:clip-path,transform}
+.story-photo img{width:100%;height:100%;object-fit:cover}
+.story-block.right .story-photo{margin-left:auto}
+.story-txt{margin-top:18px}
+.story-txt h4{font:400 22px var(--serif);letter-spacing:.08em}
+.story-txt p{margin-top:8px;font:300 13.5px/1.75 var(--sans);color:var(--cream-60)}
+
+/* ============ GIFT ============ */
+.bank-card{border:1px solid var(--line);border-radius:16px;padding:4px 18px;margin:20px auto 0;max-width:400px;width:100%;background:rgba(237,231,220,.03);text-align:left}
+.bank-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.bank-row:last-child{border-bottom:0}
+.bank-row small{display:block;font:300 9px var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--cream-40);margin-bottom:4px}
+.bank-row b{font:400 17px var(--serif);letter-spacing:.05em}
+.copy-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--cream-60);
+  display:grid;place-items:center;cursor:pointer;flex:none;transition:.25s}
+.copy-btn:active{transform:scale(.88);color:var(--cream)}
+.copy-btn svg{width:14px;height:14px}
+.addr{padding:14px 0 8px;font:300 13px/1.7 var(--sans);color:var(--cream-60)}
+.attention{margin-top:20px;font:300 11.5px/1.85 var(--sans);color:var(--cream-40);text-align:left;max-width:400px;margin-inline:auto}
+.attention b{color:var(--cream);font-weight:500;letter-spacing:.1em}
+
+/* ============ WISHES ============ */
+.wish-list{margin-top:24px;max-height:min(32vh,300px);overflow-y:auto;padding-right:6px;text-align:left;
+  scrollbar-width:thin;scrollbar-color:rgba(237,231,220,.25) transparent}
+.wish-list::-webkit-scrollbar{width:4px}
+.wish-list::-webkit-scrollbar-thumb{background:rgba(237,231,220,.2);border-radius:4px}
+.wish{display:flex;gap:13px;padding:14px 2px;border-bottom:1px solid var(--line)}
+.wish:last-child{border-bottom:0}
+.ava{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;font:500 15px var(--serif);
+  background:rgba(237,231,220,.07);border:1px solid var(--line)}
+.w-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.w-top h5{font:400 13px var(--sans);letter-spacing:.05em}
+.w-top time{font:300 9px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--cream-40)}
+.w-body p{margin-top:5px;font:300 13px/1.65 var(--sans);color:var(--cream-60)}
+
+/* ============ CLOSING ============ */
+.closing{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:88px 26px 140px}
+.closing-text{font:300 13.5px/1.9 var(--sans);color:var(--cream-60);max-width:34ch;margin:0 auto}
+.closing-photo{width:min(66%,300px);aspect-ratio:4/5;margin:30px auto 28px}
+.closing-big{font:400 clamp(25px,7.6vw,33px)/1.45 var(--serif);letter-spacing:.18em;text-transform:uppercase}
+.closing-script{font-family:var(--script);font-size:clamp(44px,12vw,54px);margin-top:10px}
+.credit{margin-top:38px;font:300 10px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--cream-40);
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.credit b{color:var(--cream-60);font-weight:400}
+.credit .heart{width:11px;height:11px;color:#C4384D}
+
+/* ============ BOTTOM NAV & MUSIC ============ */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;z-index:46;display:flex;
+  background:rgba(12,11,13,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);padding:6px 8px calc(8px + env(safe-area-inset-bottom))}
+.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 2px;
+  color:var(--cream);opacity:.42;text-decoration:none;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;transition:opacity .3s}
+.bottom-nav a svg{width:19px;height:19px}
+.bottom-nav a::after{content:"";width:3px;height:3px;border-radius:50%;background:currentColor;opacity:0;transform:scale(.4);transition:.3s;margin-top:2px}
+.bottom-nav a.active{opacity:1}
+.bottom-nav a.active::after{opacity:.9;transform:scale(1)}
+
+.float-wrap{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));left:0;right:0;max-width:480px;margin:0 auto;
+  z-index:45;pointer-events:none;display:flex;padding:0 18px}
+.music-btn{pointer-events:auto;margin-right:auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+  background:rgba(12,11,13,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--cream);display:grid;place-items:center;cursor:pointer}
+.eq{display:flex;align-items:flex-end;gap:3px;height:16px}
+.eq i{width:3px;height:5px;border-radius:2px;background:currentColor;opacity:.5;transition:opacity .3s}
+.music-btn.playing .eq i{opacity:1;animation:eqb 1s ease-in-out infinite}
+.music-btn.playing .eq i:nth-child(2){animation-delay:.22s}
+.music-btn.playing .eq i:nth-child(3){animation-delay:.44s}
+@keyframes eqb{0%,100%{height:5px}50%{height:16px}}
+
+.toast{position:fixed;bottom:calc(88px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:80;
+  background:rgba(20,19,22,.94);border:1px solid var(--line);color:var(--cream);
+  font:300 12px var(--sans);letter-spacing:.1em;padding:11px 20px;border-radius:999px;opacity:0;pointer-events:none;backdrop-filter:blur(8px)}
+</style>
+</head>
+<body class="lock">
+
+<div id="app">
+
+  <!-- ================= COVER ================= -->
+  <div class="cover" id="cover">
+    <div class="cover-bg"><img src="https://picsum.photos/seed/kenam-cover/900/1400" alt=""></div>
+    <div class="cover-shade"></div>
+    <div class="cover-inner">
+      <p class="cover-pre">The Wedding Of</p>
+      <h1 class="cover-names"><span class="cn">Kenny</span><span class="cn">&amp; Amanda</span></h1>
+      <div class="cover-dear">
+        <p>Dear,</p>
+        <p class="guest-name" id="guestName">Tamu Undangan</p>
+      </div>
+      <button class="open-btn" id="openBtn">Open Invitation</button>
+    </div>
+  </div>
+
+  <!-- ================= HERO (snap) ================= -->
+  <section class="hero snap" id="home">
+    <div class="parallax"><img src="https://picsum.photos/seed/kenam-hero/900/1400" alt="Kenny &amp; Amanda"></div>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <p class="eyebrow">The Wedding Of</p>
+      <h2 class="hero-names"><span class="hn">Kenny</span><span class="hn-amp">&amp;</span><span class="hn">Amanda</span></h2>
+      <p class="hero-date">20 · 09 · 2025</p>
+    </div>
+    <div class="hero-quote">
+      <p>“And now these three remain: faith, hope, and love. But the greatest of these is love.”</p>
+      <span>1 Corinthians 13 : 13</span>
+    </div>
+    <div class="scroll-hint"><span class="hint-line"><i></i></span></div>
+  </section>
+
+  <div class="marquee mq-l" aria-hidden="true">
+    <div class="mq-track">
+      <span>Kenny &amp; Amanda</span><b>✦</b><span>20 · 09 · 2025</span><b>✦</b><span>Forever Begins</span><b>✦</b>
+      <span>Kenny &amp; Amanda</span><b>✦</b><span>20 · 09 · 2025</span><b>✦</b><span>Forever Begins</span><b>✦</b>
+    </div>
+  </div>
+
+  <!-- ================= SAVE THE DATE (snap) ================= -->
+  <section class="save-date snap">
+    <div class="parallax"><img src="https://picsum.photos/seed/kenam-date/900/1300" alt=""></div>
+    <div class="sd-shade"></div>
+    <div class="sd-inner">
+      <div class="sd-date" aria-label="20 September 2025">
+        <span class="sd-r">20</span><span class="sd-r">SEP</span><span class="sd-r">2025</span>
+      </div>
+      <p class="sd-script slide-r">Save the date</p>
+    </div>
+  </section>
+
+  <!-- ================= COUPLE (snap) ================= -->
+  <div id="couple">
+    <section class="person snap">
+      <h2 class="script-title"><span class="st-mask"><span class="st-inner">The Groom</span></span></h2>
+      <div class="orb"><img src="https://picsum.photos/seed/kenam-groom/700/860" alt="Groom"></div>
+      <div class="slide-l">
+        <h3 class="person-name">Kenny Alvaro <i>, S.E</i></h3>
+        <p class="person-sub">Son of Mr. &amp; Mrs.</p>
+      </div>
+      <a class="ig-link slide-l" href="https://instagram.com" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
+        @kennyalvaro</a>
+    </section>
+    <section class="person snap">
+      <h2 class="script-title"><span class="st-mask"><span class="st-inner">The Bride</span></span></h2>
+      <div class="orb"><img src="https://picsum.photos/seed/kenam-bride/700/860" alt="Bride"></div>
+      <div class="slide-r">
+        <h3 class="person-name">Amanda Caty <i>, S.H</i></h3>
+        <p class="person-sub">Daughter of Mr. &amp; Mrs.</p>
+      </div>
+      <a class="ig-link slide-r" href="https://instagram.com" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
+        @amandacaty</a>
+    </section>
+  </div>
+
+  <!-- ================= COUNTDOWN (snap) ================= -->
+  <section class="countdown snap" id="event">
+    <div class="parallax"><img src="https://picsum.photos/seed/kenam-count/900/1250" alt=""></div>
+    <div class="cd-shade"></div>
+    <div class="cd-content">
+      <p class="eyebrow reveal">Counting Down</p>
+      <h3 class="cd-forever reveal">Forever</h3>
+      <div class="cd-timer">
+        <div class="t-cell"><span id="cdD">00</span><small>Days</small></div>
+        <div class="t-cell"><span id="cdH">00</span><small>Hours</small></div>
+        <div class="t-cell"><span id="cdM">00</span><small>Minutes</small></div>
+        <div class="t-cell"><span id="cdS">00</span><small>Seconds</small></div>
+      </div>
+      <p class="cd-day reveal">Saturday</p>
+      <h3 class="cd-date reveal">20 September 2025</h3>
+      <p class="cd-label reveal">Wedding Day</p>
+      <p class="cd-invite reveal">Together with our families, we warmly invite you to celebrate our wedding.</p>
+    </div>
+  </section>
+
+  <div class="marquee mq-r" aria-hidden="true">
+    <div class="mq-track">
+      <span>Save The Date</span><b>✦</b><span>Kenny &amp; Amanda</span><b>✦</b><span>Shangri-La Surabaya</span><b>✦</b>
+      <span>Save The Date</span><b>✦</b><span>Kenny &amp; Amanda</span><b>✦</b><span>Shangri-La Surabaya</span><b>✦</b>
+    </div>
+  </div>
+
+  <!-- ================= EVENTS (snap) ================= -->
+  <section class="ev-page snap">
+    <div class="event-card slide-l">
+      <h3 class="ev-title">Holy<br>Matrimony</h3>
+      <p class="ev-time">12.00 WIB</p>
+      <p class="ev-venue">Shangri-La Hotel Surabaya</p>
+      <p class="ev-addr">Jl. Mayjen Sungkono No.120, Pakis, Kec. Sawahan, Surabaya, Jawa Timur 60256</p>
+      <a class="btn" target="_blank" rel="noopener" href="https://maps.google.com/?q=Shangri-La+Hotel+Surabaya">
+        Direction
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </section>
+  <section class="ev-page snap">
+    <div class="event-card slide-r">
+      <h3 class="ev-title">Wedding<br>Reception</h3>
+      <p class="ev-time">12.00 WIB — End</p>
+      <p class="ev-venue">Shangri-La Hotel Surabaya</p>
+      <p class="ev-addr">Jl. Mayjen Sungkono No.120, Pakis, Kec. Sawahan, Surabaya, Jawa Timur 60256</p>
+      <a class="btn" target="_blank" rel="noopener" href="https://maps.google.com/?q=Shangri-La+Hotel+Surabaya">
+        Direction
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= LIVE STREAMING (snap) ================= -->
+  <section class="sec full snap">
+    <h2 class="script-title"><span class="st-mask"><span class="st-inner">Live Streaming</span></span></h2>
+    <p class="sec-sub reveal">The Ceremony / Holy Matrimony will be streamed on Youtube &amp; Instagram on Saturday, 20 September 2025.</p>
+    <a class="btn btn-red slide-r" style="margin-top:26px" href="https://youtube.com" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+      Open Youtube
+    </a>
+  </section>
+
+  <!-- ================= RSVP (snap) ================= -->
+  <section class="sec full snap" id="rsvp">
+    <h2 class="script-title"><span class="st-mask"><span class="st-inner">Rsvp</span></span></h2>
+    <p class="sec-sub reveal">We would be honored to have you with us on our special day.</p>
+    <form id="rsvpForm" class="slide-l">
+      <div class="field">
+        <span class="f-label">Name</span>
+        <input id="rvName" type="text" placeholder="Your full name" required>
+      </div>
+      <div class="field">
+        <span class="f-label">Number of Guests (People)</span>
+        <select id="rvGuests">
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>More than 5</option>
+        </select>
+      </div>
+      <div class="field">
+        <span class="f-label">Will you be attending?</span>
+        <label class="radio"><input type="radio" name="attend" value="yes" checked><span class="dot"></span><span>Yes, I will attend</span></label>
+        <label class="radio"><input type="radio" name="attend" value="no"><span class="dot"></span><span>No, sorry, I can't come</span></label>
+      </div>
+      <button class="btn btn-solid" type="submit" style="margin-top:6px">Submit</button>
+      <p class="form-ok" id="rsvpOk">Thank you! Your response has been received.</p>
+    </form>
+  </section>
+
+  <!-- ================= GALLERY HORIZONTAL (snap per foto, gerak dilambatkan) ================= -->
+  <section class="h-wrap snap" id="gallery">
+    <div class="h-track" id="hTrack">
+      <div class="h-card h-intro">
+        <p class="eyebrow">Gallery</p>
+        <h2 class="script-title" style="font-size:clamp(52px,15vw,72px)">Our Moments</h2>
+        <p>A collection of laughter, quiet glances, and everything in between.</p>
+        <span class="swipe-hint">
+          Keep scrolling
+          <svg viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h22M19 2l4 4-4 4"/></svg>
+        </span>
+      </div>
+      <figure class="h-card h-photo"><img src="https://picsum.photos/seed/kenam-h1/600/860" alt=""></figure>
+      <figure class="h-card h-tall"><img src="https://picsum.photos/seed/kenam-h2/560/960" alt=""></figure>
+      <div class="h-card h-photo" style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px -30px rgba(0,0,0,.9)">
+        <img src="https://picsum.photos/seed/kenam-h3/600/860" alt="Prewedding film" style="position:absolute;inset:0">
+        <span style="position:absolute;inset:0;margin:auto;width:52px;height:52px;border-radius:50%;background:rgba(11,10,12,.55);backdrop-filter:blur(4px);border:1px solid var(--line);display:grid;place-items:center;color:#fff">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </span>
+        <span style="position:absolute;left:12px;bottom:12px;font:300 10px var(--sans);letter-spacing:.08em;background:rgba(11,10,12,.6);padding:6px 12px;border-radius:999px">Prewedding Film ▸ Youtube</span>
+      </div>
+      <figure class="h-card h-tall"><img src="https://picsum.photos/seed/kenam-h4/560/960" alt=""></figure>
+      <figure class="h-card h-photo"><img src="https://picsum.photos/seed/kenam-h5/600/860" alt=""></figure>
+      <figure class="h-card h-tall"><img src="https://picsum.photos/seed/kenam-h6/560/960" alt=""></figure>
+      <div class="h-card h-end">
+        <h2 class="script-title" style="font-size:clamp(40px,11vw,54px)">Kenny &amp; Amanda</h2>
+        <p>20 · 09 · 2025</p>
+      </div>
+    </div>
+    <div class="h-progress"><i></i></div>
+  </section>
+
+  <!-- ================= LOVE STORY (snap) ================= -->
+  <section class="story-page snap" id="story">
+    <h2 class="script-title"><span class="st-mask"><span class="st-inner">Love Story</span></span></h2>
+    <article class="story-block">
+      <div class="story-photo"><img loading="lazy" src="https://picsum.photos/seed/kenam-s1/720/560" alt=""></div>
+      <div class="story-txt slide-l">
+        <h4>When we first met</h4>
+        <p>It started with a simple hello on a rainy Tuesday — a shared table at a small coffee shop, one umbrella, and a conversation that neither of us wanted to end.</p>
+      </div>
+    </article>
+  </section>
+  <section class="story-page snap">
+    <article class="story-block right">
+      <div class="story-photo"><img loading="lazy" src="https://picsum.photos/seed/kenam-s2/720/560" alt=""></div>
+      <div class="story-txt slide-r">
+        <h4>Relationship</h4>
+        <p>From road trips and late-night talks to quiet Sunday mornings, every moment taught us one thing: home is not a place, it is a person — and we found ours in each other.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ================= WEDDING GIFT (snap) ================= -->
+  <section class="sec full snap" id="gift">
+    <h2 class="script-title"><span class="st-mask"><span class="st-inner">Wedding Gift</span></span></h2>
+    <p class="sec-sub reveal">Your presence is the greatest gift of all. However, if you are unable to attend, you may use the details below.</p>
+
+    <div class="bank-card slide-l">
+      <div class="bank-row">
+        <div><small>— Bank</small><b>BCA</b></div>
+        <button class="copy-btn" data-copy="BCA" aria-label="Salin bank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></button>
+      </div>
+      <div class="bank-row">
+        <div><small>— No. Rekening</small><b>1234 5678 90</b></div>
+        <button class="copy-btn" data-copy="1234567890" aria-label="Salin rekening"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></button>
+      </div>
+      <div class="bank-row">
+        <div><small>Nama Penerima</small><b>Kenny Alvaro</b></div>
+        <button class="copy-btn" data-copy="Kenny Alvaro" aria-label="Salin nama"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></button>
+      </div>
+    </div>
+
+    <div class="bank-card slide-r">
+      <div class="bank-row">
+        <div><small>Kirim Kado</small><b>Alamat Lengkap</b></div>
+        <button class="copy-btn" data-copy="Jl. Melati Indah No. 21, Surabaya, Jawa Timur 60293" aria-label="Salin alamat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></button>
+      </div>
+      <p class="addr">Jl. Melati Indah No. 21, Surabaya, Jawa Timur 60293</p>
+    </div>
+
+    <p class="attention reveal"><b>! Attention!</b><br>
+      Pastikan nama dan nomor rekening sesuai sebelum melakukan transfer.
+      Mohon konfirmasi setelah mengirim hadiah melalui personal message. Terima kasih.</p>
+  </section>
+
+  <!-- ================= WISHES (snap) ================= -->
+  <section class="sec full snap">
+    <h2 class="script-title"><span class="st-mask"><span class="st-inner">Wishes &amp; Prayers</span></span></h2>
+    <form id="wishForm" class="slide-r">
+      <div class="field">
+        <span class="f-label">Fill your name</span>
+        <input id="wsName" type="text" maxlength="40" placeholder="Your name" required>
+      </div>
+      <div class="field">
+        <span class="f-label">Send wishes and prayers <em class="count" id="wsCount">0/300</em></span>
+        <textarea id="wsMsg" maxlength="300" placeholder="Write your wishes…" required></textarea>
+      </div>
+      <button class="btn btn-solid" type="submit">Send</button>
+    </form>
+    <div class="wish-list reveal" id="wishList" data-lenis-prevent></div>
+  </section>
+
+  <!-- ================= CLOSING (snap) ================= -->
+  <section class="closing snap">
+    <p class="closing-text reveal">Our happiness will be complete with your presence and blessing in this celebration of love. Thank you for your kind wishes, prayers, love, and attention given.</p>
+    <figure class="closing-photo ph-mask"><img loading="lazy" src="https://picsum.photos/seed/kenam-close/760/920" alt="Kenny &amp; Amanda"></figure>
+    <h3 class="closing-big slide-l">See You On<br>Our Big Day!</h3>
+    <p class="closing-script slide-r">Kenny &amp; Amanda</p>
+    <p class="credit reveal">Made with
+      <svg class="heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.3C7.4 16.9 3.6 13.6 3.6 9.9 3.6 7.2 5.7 5.2 8.2 5.2c1.5 0 2.9.8 3.8 2 .9-1.2 2.3-2 3.8-2 2.5 0 4.6 2 4.6 4.7 0 3.7-3.8 7-8.4 10.4z"/></svg>
+      by <b>Goodchoice Invitation</b></p>
+  </section>
+
+</div><!-- /app -->
+
+<!-- ================= NAV & MUSIC ================= -->
+<nav class="bottom-nav" id="bottomNav">
+  <a href="#home" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></a>
+  <a href="#couple">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5"/><path d="M15.5 5.6a3.2 3.2 0 1 1 0 4.9M16.8 14.7c2 .5 3.3 1.9 3.7 4.3"/></svg><span>Couple</span></a>
+  <a href="#event">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Event</span></a>
+  <a href="#gallery">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="M4.5 17.5l4.5-4 3 2.5 3.5-3.5 4 4"/></svg><span>Gallery</span></a>
+  <a href="#gift">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="4" rx="1"/><path d="M6 12v8h12v-8M12 8v12M12 8s-4.5.2-4.5-2.5C7.5 3.6 12 4.5 12 8zm0 0s4.5.2 4.5-2.5C16.5 3.6 12 4.5 12 8z"/></svg><span>Gift</span></a>
+</nav>
+
+<div class="float-wrap">
+  <button class="music-btn" id="musicBtn" aria-label="Putar / jeda musik">
+    <span class="eq"><i></i><i></i><i></i></span>
+  </button>
+</div>
+
+<div class="toast" id="toast">Disalin</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------------- Konfigurasi feel-of-motion (mudah di-tuning) ---------------- */
+const CFG = {
+  lenisDuration : 1.0,    // kecepatan smooth scroll global
+  stopDelay     : 90,     // ms jeda sebelum snap (makin kecil makin responsif)
+  touchDelay    : 70,     // ms jeda snap setelah jari dilepas
+  snapMin       : 0.28,   // durasi snap tercepat (detik)
+  snapMax       : 0.65,   // durasi snap terlama (detik)
+  snapDiv       : 5200,   // makin besar = makin cepat untuk jarak jauh
+  forwardBias   : 0.85,   // <1 = condong lanjut ke halaman berikutnya
+  hSpeed        : 2.2     // galeri horizontal: 1px geser = 2.2px scroll (makin besar makin lambat)
+};
+
+/* ---------------- Lenis smooth scroll ---------------- */
+const lenis = new Lenis({ duration: CFG.lenisDuration });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((t) => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+lenis.stop();
+
+let opened = false;
+
+/* ---------------- Nama tamu dari URL (?to=Nama) ---------------- */
+const guestEl = document.getElementById('guestName');
+const toParam = new URLSearchParams(location.search).get('to');
+if (toParam) guestEl.textContent = toParam;
+
+/* ---------------- State awal ---------------- */
+document.querySelectorAll('.hero > .parallax img').forEach(img => gsap.set(img, { scale: 1.28, transformOrigin: '50% 62%' }));
+gsap.set('.hero-content > *, .hero-quote > *', { opacity: 0, y: 34 });
+gsap.set('.scroll-hint', { opacity: 0, y: 12 });
+gsap.set(['.music-btn', '.bottom-nav'], { opacity: 0, y: 22 });
+
+/* ---------------- Intro cover ---------------- */
+gsap.timeline({ defaults: { ease: 'power3.out' } })
+  .from('.cover-bg img', { scale: 1.18, duration: 2.4, ease: 'power2.out' }, 0)
+  .from('.cover-shade', { opacity: 0, duration: 1.4 }, 0)
+  .from('.cover-pre', { y: 22, opacity: 0, duration: 1 }, .35)
+  .from('.cover-names .cn', { y: 58, opacity: 0, stagger: .14, duration: 1.15 }, .5)
+  .from('.cover-dear > *', { y: 18, opacity: 0, stagger: .12, duration: .9 }, 1.0)
+  .from('.open-btn', { y: 18, opacity: 0, duration: .9 }, 1.25);
+
+/* ---------------- Open invitation ---------------- */
+document.getElementById('openBtn').addEventListener('click', () => {
+  startMusic();
+  opened = true;
+  document.body.classList.remove('lock');
+  document.body.classList.add('opened');
+  gsap.timeline({ defaults: { ease: 'power2.inOut' } })
+    .to('.cover-inner > *', { y: -26, opacity: 0, stagger: .05, duration: .45, ease: 'power2.in' })
+    .to('.cover-bg img', { scale: 1.14, duration: 1.15 }, '-=.35')
+    .to('#cover', { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.05, ease: 'power4.inOut' }, '-=.45')
+    .set('#cover', { display: 'none' })
+    .add(() => { lenis.start(); ScrollTrigger.refresh(); }, '-=.1')
+    .to('.hero > .parallax img', { scale: 1, duration: 1.8, ease: 'power2.out' }, '-=.55')
+    .to('.hero-content > *', { opacity: 1, y: 0, stagger: .11, duration: 1, ease: 'power3.out' }, '-=1.35')
+    .to('.hero-quote > *', { opacity: 1, y: 0, stagger: .09, duration: .9, ease: 'power3.out' }, '-=.8')
+    .to('.scroll-hint', { opacity: 1, y: 0, duration: .8, ease: 'power3.out' }, '-=.55')
+    .to(['.music-btn', '.bottom-nav'], { opacity: 1, y: 0, duration: .7, stagger: .1, ease: 'power3.out' }, '-=.6');
+});
+
+/* ================================================================
+   ANIMASI SCROLL — VARIASI ARAH
+================================================================ */
+gsap.utils.toArray('.reveal').forEach((el) => {
+  gsap.from(el, { y: 44, opacity: 0, duration: 1.05, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 87%', once: true } });
+});
+gsap.utils.toArray('.slide-l').forEach((el) => {
+  gsap.from(el, { x: -70, opacity: 0, duration: 1.1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 86%', once: true } });
+});
+gsap.utils.toArray('.slide-r').forEach((el) => {
+  gsap.from(el, { x: 70, opacity: 0, duration: 1.1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 86%', once: true } });
+});
+gsap.utils.toArray('.st-inner').forEach((el) => {
+  gsap.from(el, { yPercent: 114, duration: 1.15, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 92%', once: true } });
+});
+gsap.utils.toArray('.ph-mask').forEach((box) => {
+  const img = box.querySelector('img');
+  gsap.timeline({ scrollTrigger: { trigger: box, start: 'top 84%', once: true } })
+    .fromTo(box, { clipPath: 'inset(12% 8% 12% 8% round 18px)' },
+                 { clipPath: 'inset(0% 0% 0% 0% round 18px)', duration: 1.25, ease: 'power3.out' })
+    .fromTo(img, { scale: 1.22 }, { scale: 1, duration: 1.7, ease: 'power2.out' }, 0);
+});
+gsap.utils.toArray('.orb').forEach((o, i) => {
+  const fromX = i % 2 ? 90 : -90;
+  const rot = i % 2 ? 3.5 : -3.5;
+  gsap.timeline({ scrollTrigger: { trigger: o, start: 'top 82%', once: true } })
+    .from(o, { x: fromX, rotation: rot, opacity: 0, scale: .9, duration: 1.25, ease: 'power3.out' }, 0)
+    .from(o.querySelector('img'), { scale: 1.3, duration: 1.8, ease: 'power2.out' }, 0);
+});
+gsap.utils.toArray('.parallax img').forEach((img, i) => {
+  const dx = i % 2 ? 5 : -5;
+  gsap.fromTo(img, { yPercent: -8, xPercent: dx },
+    { yPercent: 8, xPercent: -dx, ease: 'none',
+      scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } });
+});
+gsap.from('.sd-date', { x: -50, opacity: 0, duration: 1.05, ease: 'power3.out',
+  scrollTrigger: { trigger: '.sd-date', start: 'top 85%', once: true } });
+gsap.utils.toArray('.sd-r').forEach((el, i) => {
+  const d = i % 2 ? 14 : -14;
+  gsap.fromTo(el, { xPercent: d }, { xPercent: -d, ease: 'none',
+    scrollTrigger: { trigger: '.save-date', start: 'top bottom', end: 'bottom top', scrub: true } });
+});
+gsap.from('.t-cell', { x: -48, opacity: 0, stagger: .09, duration: .9, ease: 'power3.out',
+  scrollTrigger: { trigger: '.cd-timer', start: 'top 85%', once: true } });
+
+/* Marquee: arah kiri/kanan mengikuti scroll */
+document.querySelectorAll('.marquee').forEach((mq) => {
+  const track = mq.querySelector('.mq-track');
+  track.innerHTML += track.innerHTML;
+  const toRight = mq.classList.contains('mq-r');
+  gsap.fromTo(track,
+    { xPercent: toRight ? -50 : 0 },
+    { xPercent: toRight ? 0 : -50, ease: 'none',
+      scrollTrigger: { trigger: mq, start: 'top bottom', end: 'bottom top', scrub: 1 } });
+});
+
+/* ================================================================
+   GALLERY HORIZONTAL — di-pin, gerak DILAMBATKAN (hSpeed)
+   1px geser samping = hSpeed px scroll vertikal
+================================================================ */
+const hWrap  = document.getElementById('gallery');
+const hTrack = document.getElementById('hTrack');
+const hBar   = document.querySelector('.h-progress i');
+const hAmount = () => Math.max(0, hTrack.scrollWidth - hWrap.clientWidth);
+const hTween = gsap.to(hTrack, {
+  x: () => -hAmount(), ease: 'none',
+  scrollTrigger: {
+    trigger: hWrap, start: 'top top',
+    end: () => '+=' + Math.round(hAmount() * CFG.hSpeed), // <- scroll range diperpanjang
+    pin: true, scrub: 0.9, anticipatePin: 1, invalidateOnRefresh: true,
+    onUpdate: (self) => { if (hBar) gsap.set(hBar, { scaleX: self.progress }); }
+  }
+});
+const hST = hTween.scrollTrigger;
+gsap.from('.h-intro > *', { y: 40, opacity: 0, stagger: .1, duration: 1, ease: 'power3.out',
+  scrollTrigger: { trigger: hWrap, start: 'top 70%', once: true } });
+
+gsap.utils.toArray('.story-photo').forEach((box, i) => {
+  const right = i % 2 === 1;
+  const from = right ? 'inset(0% 0% 0% 100% round 18px)' : 'inset(0% 100% 0% 0% round 18px)';
+  gsap.timeline({ scrollTrigger: { trigger: box, start: 'top 84%', once: true } })
+    .fromTo(box, { clipPath: from }, { clipPath: 'inset(0% 0% 0% 0% round 18px)', duration: 1.1, ease: 'power3.inOut' })
+    .from(box.querySelector('img'), { scale: 1.28, xPercent: right ? 9 : -9, duration: 1.6, ease: 'power2.out' }, 0);
+});
+
+/* ================================================================
+   FULL-PAGE SNAP — cepat & presisi
+================================================================ */
+const snapSections = gsap.utils.toArray('.snap');
+const snapSTs = snapSections.map(el => ScrollTrigger.create({ trigger: el, start: 'top top' }));
+
+let snapTimer = null, snapGuard = null, snapping = false, touching = false;
+
+function getSnapPoints() {
+  const vh = window.innerHeight;
+  const pts = [];
+  snapSections.forEach((el, i) => {
+    const st = snapSTs[i];
+    pts.push(st.start);
+    const h = el.offsetHeight;
+    if (h > vh + 24) pts.push(st.start + h - vh);
+  });
+  if (hST) { // di dalam galeri: snap per kartu (posisi ikut skala hSpeed)
+    const appW = document.getElementById('app').clientWidth;
+    const range = hAmount();
+    hTrack.querySelectorAll('.h-card').forEach((c) => {
+      let t = c.offsetLeft + c.offsetWidth / 2 - appW / 2;
+      t = Math.max(0, Math.min(range, t));
+      pts.push(hST.start + t * CFG.hSpeed);
+    });
+  }
+  pts.push(ScrollTrigger.maxScroll(window));
+  pts.sort((a, b) => a - b);
+  const clean = [];
+  for (const p of pts) if (!clean.length || p - clean[clean.length - 1] > 8) clean.push(Math.round(p));
+  return clean;
+}
+
+function unlock() { snapping = false; clearTimeout(snapGuard); }
+
+/* Glide cepat: tembak di awal, mantap di akhir (quart-out) */
+function glide(target, dur) {
+  snapping = true;
+  clearTimeout(snapGuard);
+  snapGuard = setTimeout(unlock, dur * 1000 + 350);
+  lenis.scrollTo(target, {
+    duration: dur,
+    easing: (t) => 1 - Math.pow(1 - t, 4),
+    onComplete: unlock
+  });
+}
+
+function trySnap() {
+  if (!opened || snapping || touching) return;
+  const ae = document.activeElement;
+  if (ae && /INPUT|TEXTAREA|SELECT/.test(ae.tagName)) return;
+
+  const y = window.scrollY;
+  const pts = getSnapPoints();
+  let best = null, bestScore = Infinity;
+  for (const p of pts) {
+    const d = p - y;
+    const score = Math.abs(d) * (d > 0 ? CFG.forwardBias : 1);
+    if (score < bestScore) { bestScore = score; best = p; }
+  }
+  if (best === null || Math.abs(best - y) < 4) return;
+  const dur = Math.min(CFG.snapMax, CFG.snapMin + Math.abs(best - y) / CFG.snapDiv);
+  glide(best, dur);
+}
+
+window.addEventListener('scroll', () => {
+  if (!opened) return;
+  clearTimeout(snapTimer);
+  snapTimer = setTimeout(trySnap, CFG.stopDelay);
+}, { passive: true });
+
+window.addEventListener('touchstart', () => { touching = true; unlock(); }, { passive: true });
+window.addEventListener('touchend', () => {
+  touching = false;
+  clearTimeout(snapTimer);
+  snapTimer = setTimeout(trySnap, CFG.touchDelay);
+}, { passive: true });
+['wheel', 'keydown'].forEach((ev) =>
+  window.addEventListener(ev, () => { if (snapping) unlock(); }, { passive: true }));
+
+/* ---------------- Countdown live ---------------- */
+const TARGET = new Date('2025-09-20T09:00:00+07:00').getTime();
+const cd = {
+  d: document.getElementById('cdD'), h: document.getElementById('cdH'),
+  m: document.getElementById('cdM'), s: document.getElementById('cdS')
+};
+function setNum(el, v) {
+  const s = String(v).padStart(2, '0');
+  if (el.textContent !== s) { el.textContent = s;
+    gsap.fromTo(el, { y: -9, opacity: .3 }, { y: 0, opacity: 1, duration: .5, ease: 'power2.out' }); }
+}
+function tick() {
+  const diff = Math.max(0, TARGET - Date.now());
+  setNum(cd.d, Math.floor(diff / 864e5));
+  setNum(cd.h, Math.floor(diff / 36e5) % 24);
+  setNum(cd.m, Math.floor(diff / 6e4) % 60);
+  setNum(cd.s, Math.floor(diff / 1e3) % 60);
+}
+tick(); setInterval(tick, 1000);
+
+/* ---------------- Toast ---------------- */
+const toast = document.getElementById('toast');
+let toastTl;
+function showToast(msg) {
+  toast.textContent = msg;
+  toastTl && toastTl.kill();
+  toastTl = gsap.timeline()
+    .fromTo(toast, { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .35, ease: 'power2.out' })
+    .to(toast, { opacity: 0, y: -10, duration: .4, ease: 'power2.in' }, '+=1.5');
+}
+
+/* ---------------- Copy rekening ---------------- */
+document.querySelectorAll('.copy-btn').forEach((b) => {
+  b.addEventListener('click', async () => {
+    const t = b.dataset.copy;
+    try { await navigator.clipboard.writeText(t); }
+    catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = t; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+    }
+    showToast('Berhasil disalin');
+  });
+});
+
+/* ---------------- RSVP ---------------- */
+const rsvpOk = document.getElementById('rsvpOk');
+document.getElementById('rsvpForm').addEventListener('submit', (e) => {
+  e.preventDefault(); e.target.reset();
+  rsvpOk.style.display = 'block';
+  gsap.fromTo(rsvpOk, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .6, ease: 'power2.out' });
+  showToast('RSVP terkirim — sampai jumpa!');
+});
+
+/* ---------------- Wishes & Prayers ---------------- */
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+let wishes = [
+  { n: 'Andini Prameswari', t: '2 days ago', m: 'Congratulations, Kenny & Amanda! Wishing you a lifetime full of love and laughter.' },
+  { n: 'Bagas Wicaksono', t: '1 day ago', m: 'Selamat untuk kalian berdua! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah.' },
+  { n: 'Sarah & Tom', t: '5 hours ago', m: 'So happy for you two. See you on the big day!' }
+];
+const wishList = document.getElementById('wishList');
+function wishNode(w) {
+  const div = document.createElement('div'); div.className = 'wish';
+  div.innerHTML = `<span class="ava">${esc((w.n.trim()[0] || '•').toUpperCase())}</span>
+    <div class="w-body"><div class="w-top"><h5>${esc(w.n)}</h5><time>${esc(w.t)}</time></div><p>${esc(w.m)}</p></div>`;
+  return div;
+}
+wishes.forEach((w) => wishList.appendChild(wishNode(w)));
+
+const wsMsg = document.getElementById('wsMsg'), wsCount = document.getElementById('wsCount');
+const updateCount = () => wsCount.textContent = `${wsMsg.value.length}/300`;
+wsMsg.addEventListener('input', updateCount);
+
+document.getElementById('wishForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const n = document.getElementById('wsName');
+  const w = { n: n.value.trim(), t: 'just now', m: wsMsg.value.trim() };
+  const node = wishNode(w);
+  wishList.prepend(node);
+  gsap.from(node, { y: 20, opacity: 0, duration: .7, ease: 'power3.out' });
+  e.target.reset(); updateCount();
+  showToast('Terkirim — terima kasih!');
+});
+
+/* ---------------- Bottom nav ---------------- */
+document.querySelectorAll('.bottom-nav a').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) glide(target, 1.0);
+  });
+});
+const navLinks = document.querySelectorAll('.bottom-nav a');
+const navMap = [['#home','#couple'],['#couple','#event'],['#event','#gallery'],['#gallery','#gift'],['#gift','.closing']];
+navLinks.forEach((a, i) => {
+  const [start, end] = navMap[i];
+  ScrollTrigger.create({ trigger: start, start: 'top 55%', endTrigger: end, end: 'top 55%',
+    onToggle: (s) => a.classList.toggle('active', s.isActive) });
+});
+
+/* ---------------- Musik: ambient pad via Web Audio ---------------- */
+let actx = null, master = null, loopTimer = null, musicOn = false, chordIdx = 0;
+const CHORDS = [
+  [261.63, 329.63, 392.00, 523.25],
+  [220.00, 261.63, 329.63, 440.00],
+  [174.61, 220.00, 261.63, 349.23],
+  [196.00, 246.94, 293.66, 392.00]
+];
+const musicBtn = document.getElementById('musicBtn');
+function ensureAudio() {
+  if (actx) return;
+  actx = new (window.AudioContext || window.webkitAudioContext)();
+  master = actx.createGain(); master.gain.value = 0;
+  const f = actx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 1100; f.Q.value = .4;
+  master.connect(f); f.connect(actx.destination);
+}
+function playChord() {
+  if (!musicOn) return;
+  const t = actx.currentTime;
+  CHORDS[chordIdx++ % CHORDS.length].forEach((fr, i) => {
+    [['sine', 1, 1], ['triangle', 2, .35]].forEach(([type, mul, amp]) => {
+      const o = actx.createOscillator(); o.type = type; o.frequency.value = fr * mul;
+      const g = actx.createGain(); const peak = (0.16 / (i + 1)) * amp;
+      g.gain.setValueAtTime(.0001, t);
+      g.gain.linearRampToValueAtTime(peak, t + 1.4);
+      g.gain.setValueAtTime(peak, t + 3.0);
+      g.gain.linearRampToValueAtTime(.0001, t + 5.4);
+      o.connect(g); g.connect(master); o.start(t); o.stop(t + 5.6);
+    });
+  });
+}
+function startMusic() {
+  ensureAudio();
+  if (actx.state === 'suspended') actx.resume();
+  musicOn = true; musicBtn.classList.add('playing');
+  const t = actx.currentTime;
+  master.gain.cancelScheduledValues(t);
+  master.gain.setValueAtTime(master.gain.value, t);
+  master.gain.linearRampToValueAtTime(.5, t + 2);
+  if (!loopTimer) { playChord(); loopTimer = setInterval(playChord, 4200); }
+}
+function stopMusic() {
+  musicOn = false; musicBtn.classList.remove('playing');
+  clearInterval(loopTimer); loopTimer = null;
+  if (actx) {
+    const t = actx.currentTime;
+    master.gain.cancelScheduledValues(t);
+    master.gain.setValueAtTime(master.gain.value, t);
+    master.gain.linearRampToValueAtTime(.0001, t + .9);
+  }
+}
+musicBtn.addEventListener('click', () => musicOn ? stopMusic() : startMusic());
+
+/* ---------------- Refresh saat aset termuat ---------------- */
+window.addEventListener('load', () => ScrollTrigger.refresh());
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+</script>
+</body>
+</html>
