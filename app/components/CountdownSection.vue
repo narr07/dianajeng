@@ -78,7 +78,7 @@
 	>
 		<div class="parallax">
 			<img
-				src="https://picsum.photos/seed/kenam-count/900/1250"
+				src="/1.jpeg"
 				alt="Countdown Background"
 			/>
 		</div>

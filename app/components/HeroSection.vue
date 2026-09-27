@@ -9,36 +9,11 @@
 		<!-- Deep Cinematic Parallax Layer -->
 		<div class="parallax">
 			<img
-				src="https://picsum.photos/seed/kenam-hero/900/1400"
+				src="/gallery/curtain.jpg"
 				alt="Dian &amp; Ajeng"
 			/>
 		</div>
 		<div class="hero-shade"></div>
-
-		<!-- Left and Right Incoming Floating Photos / Badges -->
-		<div
-			class="hero-floats"
-			aria-hidden="true"
-		>
-			<div class="h-float h-float-l">
-				<div class="h-float-inner">
-					<img
-						src="https://picsum.photos/seed/kenam-h1/360/480"
-						alt="Dian Hidayat"
-					/>
-					<div class="h-float-tag">Dian Hidayat</div>
-				</div>
-			</div>
-			<div class="h-float h-float-r">
-				<div class="h-float-inner">
-					<img
-						src="https://picsum.photos/seed/kenam-h4/360/480"
-						alt="Ajeng Fauziah"
-					/>
-					<div class="h-float-tag">Ajeng Fauziah</div>
-				</div>
-			</div>
-		</div>
 
 		<!-- Center Hero Content -->
 		<div class="hero-content">
@@ -59,11 +34,29 @@
 			</div>
 		</div>
 
-		<div class="hero-quote">
-			<span class="quote-mark quote-l">“</span>
-			<p>And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He put between you affection and mercy.</p>
-			<span class="quote-mark quote-r">”</span>
-			<span class="quote-verse">QS. Ar-Rum : 21</span>
+		<!-- Bride & groom photos -->
+		<div
+			class="hero-floats"
+			aria-hidden="true"
+		>
+			<div class="h-float h-float-l">
+				<div class="h-float-inner">
+					<img
+						src="/dian.jpeg"
+						alt="Dian Hidayat"
+					/>
+					<div class="h-float-tag">Dian Hidayat</div>
+				</div>
+			</div>
+			<div class="h-float h-float-r">
+				<div class="h-float-inner">
+					<img
+						src="/ajeng.jpeg"
+						alt="Ajeng Fauziah"
+					/>
+					<div class="h-float-tag">Ajeng Fauziah</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="scroll-hint">
@@ -85,7 +78,8 @@
 		align-items: center;
 		justify-content: space-between;
 		overflow: hidden;
-		padding: 50px 20px 24px;
+		/* leave room for the fixed bottom nav */
+		padding: 50px 20px calc(92px + env(safe-area-inset-bottom));
 	}
 
 	.hero-shade {
@@ -102,31 +96,31 @@
 		pointer-events: none;
 	}
 
-	/* Floating Side Photos */
+	/* Bride & groom photos */
 	.hero-floats {
-		position: absolute;
-		inset: 0;
+		position: relative;
 		z-index: 2;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		gap: clamp(12px, 4vw, 22px);
+		width: 100%;
+		margin: clamp(28px, 5vh, 48px) 0 clamp(16px, 3vh, 28px);
 		pointer-events: none;
-		overflow: hidden;
 	}
 
 	.h-float {
-		position: absolute;
-		width: clamp(80px, 22vw, 115px);
-		height: clamp(110px, 30vw, 155px);
+		width: clamp(130px, 40vw, 190px);
+		aspect-ratio: 3 / 4;
 		will-change: transform, opacity;
 	}
 
 	.h-float-l {
-		left: 12px;
-		top: 14%;
 		transform: rotate(-6deg);
 	}
 
 	.h-float-r {
-		right: 12px;
-		top: 36%;
+		margin-top: clamp(22px, 6vw, 36px);
 		transform: rotate(6deg);
 	}
 
@@ -145,6 +139,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: 50% 22%;
 	}
 
 	.h-float-tag {
@@ -156,8 +151,8 @@
 		backdrop-filter: blur(4px);
 		-webkit-backdrop-filter: blur(4px);
 		border-radius: 999px;
-		font: 300 8.5px var(--sans);
-		letter-spacing: 0.15em;
+		font: 300 9.5px var(--sans);
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		text-align: center;
 		padding: 3px 6px;
@@ -229,41 +224,6 @@
 	.hero-date {
 		font: 300 11px var(--sans);
 		letter-spacing: 0.45em;
-		color: var(--cream-60);
-	}
-
-	.hero-quote {
-		position: relative;
-		z-index: 3;
-		text-align: center;
-		padding: 0 28px;
-		max-width: 380px;
-		margin-top: auto;
-		margin-bottom: 24px;
-	}
-
-	.quote-mark {
-		display: inline-block;
-		font: 400 24px var(--serif);
-		color: var(--maroon);
-		opacity: 0.8;
-		line-height: 0;
-		vertical-align: middle;
-		margin: 0 4px;
-	}
-
-	.hero-quote p {
-		font: italic 300 clamp(13.5px, 2.2vh, 15.5px) / 1.75 var(--serif);
-		display: inline;
-		color: var(--cream);
-	}
-
-	.quote-verse {
-		display: block;
-		margin-top: 10px;
-		font: 300 9.5px var(--sans);
-		letter-spacing: 0.32em;
-		text-transform: uppercase;
 		color: var(--cream-60);
 	}
 

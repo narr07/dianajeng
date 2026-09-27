@@ -10,7 +10,7 @@
 		<figure class="closing-photo ph-mask">
 			<img
 				loading="lazy"
-				src="https://picsum.photos/seed/kenam-close/760/920"
+				src="/gallery/seated.jpg"
 				alt="Dian &amp; Ajeng Closing"
 			/>
 		</figure>
@@ -29,7 +29,13 @@
 					d="M12 20.3C7.4 16.9 3.6 13.6 3.6 9.9 3.6 7.2 5.7 5.2 8.2 5.2c1.5 0 2.9.8 3.8 2 .9-1.2 2.3-2 3.8-2 2.5 0 4.6 2 4.6 4.7 0 3.7-3.8 7-8.4 10.4z"
 				/>
 			</svg>
-			by <b>Goodchoice Invitation</b>
+			by <a
+				href="https://permadi.dev"
+				target="_blank"
+				rel="noopener"
+			>
+				<b>narr07</b>
+			</a>
 		</p>
 	</section>
 </template>

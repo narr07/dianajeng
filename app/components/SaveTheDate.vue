@@ -3,20 +3,43 @@
 </script>
 
 <template>
-	<section class="save-date snap">
-		<!-- Parallax Background Layer -->
-		<div class="parallax">
+	<section
+		class="save-date snap"
+		data-parallax
+	>
+		<!-- Depth layers: lower speed = further away -->
+		<div
+			class="sd-layer sd-bg"
+			data-parallax-speed="0.3"
+		>
 			<img
-				src="https://picsum.photos/seed/kenam-date/900/1300"
+				src="/gallery/seated.jpg"
 				alt="Save The Date Background"
 			/>
 		</div>
 		<div class="sd-shade"></div>
+		<div
+			class="sd-layer"
+			data-parallax-speed="0.5"
+			aria-hidden="true"
+		>
+			<div class="sd-glow"></div>
+		</div>
+		<div
+			class="sd-layer"
+			data-parallax-speed="0.7"
+			aria-hidden="true"
+		>
+			<span class="sd-ghost">06·12</span>
+		</div>
 
 		<!-- Main Content with Left Typography and Right Photo -->
 		<div class="sd-inner">
 			<div class="sd-content-grid">
-				<div class="sd-left">
+				<div
+					class="sd-left"
+					data-parallax-speed="0.95"
+				>
 					<p class="eyebrow slide-l">Wedding Announcement</p>
 					<div
 						class="sd-date"
@@ -29,15 +52,18 @@
 					<p class="sd-script slide-l">Save the date</p>
 				</div>
 
-				<div class="sd-right">
+				<div
+					class="sd-right"
+					data-parallax-speed="1.4"
+				>
 					<div class="sd-photo-card slide-r">
 						<div class="sd-photo-inner">
 							<img
-								src="https://picsum.photos/seed/kenam-date2/420/560"
+								src="/gallery/umbrella.jpg"
 								alt="Dian &amp; Ajeng Save the Date"
 							/>
 							<div class="sd-card-glass">
-								<span>Majalengka, West Java</span>
+								<span>Majalengka, West Java </br> Indonesia</span>
 							</div>
 						</div>
 					</div>
@@ -61,6 +87,46 @@
 		flex-direction: column;
 		justify-content: flex-end;
 		overflow: hidden;
+	}
+
+	.sd-layer {
+		position: absolute;
+		inset: -12% 0;
+		z-index: 1;
+		display: grid;
+		place-items: center;
+		pointer-events: none;
+		will-change: transform;
+	}
+
+	.sd-bg {
+		z-index: 0;
+	}
+
+	.sd-bg img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.sd-glow {
+		width: 70vmin;
+		max-width: 360px;
+		aspect-ratio: 1;
+		margin-bottom: 30%;
+		border-radius: 50%;
+		background: radial-gradient(circle, rgba(179, 37, 57, 0.55), transparent 70%);
+		filter: blur(40px);
+	}
+
+	.sd-ghost {
+		margin-bottom: 18%;
+		font: 300 clamp(110px, 34vw, 170px) / 1 var(--serif);
+		letter-spacing: -0.02em;
+		color: transparent;
+		-webkit-text-stroke: 1px rgba(237, 231, 220, 0.14);
+		white-space: nowrap;
+		user-select: none;
 	}
 
 	.sd-shade {

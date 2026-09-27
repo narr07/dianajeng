@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, onMounted } from 'vue'
+	import { ref, onMounted, onUnmounted } from 'vue'
 	import gsap from 'gsap'
 
 	const props = defineProps<{
@@ -16,86 +16,87 @@
 	const isOpening = ref(false)
 	const isDestroyed = ref(false)
 
+	let introTl: gsap.core.Timeline | null = null
+	let breathe: gsap.core.Tween | null = null
+
 	onMounted(() => {
-		if (coverRef.value) {
-			const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-			tl.from(
+		if (!coverRef.value) return
+
+		introTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+		introTl
+			// Photo slowly settles in
+			.fromTo(
 				coverBgRef.value,
-				{ scale: 1.15, duration: 1.8, ease: 'power2.out' },
+				{ scale: 1.2 },
+				{ scale: 1.05, duration: 2.8, ease: 'power2.out' },
 				0
 			)
-				.from(
-					'.cover-shade',
-					{ opacity: 0, duration: 1.2 },
-					0
-				)
-				.from(
-					'.cover-pre',
-					{ y: 16, opacity: 0, duration: 0.8 },
-					0.2
-				)
-				.from(
-					'.cn-l',
-					{ x: -50, opacity: 0, duration: 0.9, ease: 'power3.out' },
-					0.35
-				)
-				.from(
-					'.cn-r',
-					{ x: 50, opacity: 0, duration: 0.9, ease: 'power3.out' },
-					0.35
-				)
-				.from(
-					'.cover-dear > *',
-					{ y: 14, opacity: 0, stagger: 0.08, duration: 0.8 },
-					0.6
-				)
-				.from(
-					'.open-btn',
-					{ scale: 0.92, opacity: 0, duration: 0.8, ease: 'back.out(1.5)' },
-					0.8
-				)
-		}
+			.from('.cover-shade', { opacity: 0, duration: 1.6 }, 0)
+			// Top block: eyebrow, then names drop in
+			.from(
+				'.cover-pre',
+				{ opacity: 0, duration: 1.4 },
+				0.5
+			)
+			.from(
+				'.cn',
+				{ y: -20, opacity: 0, stagger: 0.2, duration: 1.4, ease: 'power2.out' },
+				0.75
+			)
+			// Bottom block: Dear, guest name, button rise up
+			.from(
+				'.cover-dear > *',
+				{ y: 14, opacity: 0, stagger: 0.14, duration: 1 },
+				1.4
+			)
+			.from(
+				'.open-btn',
+				{ y: 14, opacity: 0, duration: 1 },
+				1.7
+			)
+
+		// Gentle, endless Ken Burns drift while waiting
+		breathe = gsap.to(coverBgRef.value, {
+			scale: 1.1,
+			duration: 12,
+			ease: 'sine.inOut',
+			yoyo: true,
+			repeat: -1,
+			delay: 2.8
+		})
+	})
+
+	onUnmounted(() => {
+		introTl?.kill()
+		breathe?.kill()
 	})
 
 	const handleOpen = () => {
 		if (isOpening.value) return
 		isOpening.value = true
 
-		// 1. Force remove body lock immediately so page can be scrolled
 		document.body.classList.remove('lock')
 		document.body.classList.add('opened')
 
-		// 2. Disable pointer events immediately so it never blocks gestures
 		if (coverRef.value) {
 			coverRef.value.style.pointerEvents = 'none'
 		}
 
-		// 3. Emit open event
+		introTl?.progress(1)
+		breathe?.kill()
+
 		emit('open')
 
-		// 4. Smooth curtain lift-up animation & complete destruction
-		const tl = gsap.timeline({
+		// Content fades, then the cover glides up with the photo lagging behind
+		gsap.timeline({
 			defaults: { ease: 'power3.inOut' },
 			onComplete: () => {
 				isDestroyed.value = true
 			}
 		})
-
-		tl.to(
-			coverInnerRef.value,
-			{ y: -50, autoAlpha: 0, duration: 0.5, ease: 'power2.in' },
-			0
-		)
-			.to(
-				coverBgRef.value,
-				{ scale: 1.15, duration: 0.9 },
-				0
-			)
-			.to(
-				coverRef.value,
-				{ yPercent: -100, autoAlpha: 0, duration: 0.85, ease: 'power4.inOut' },
-				0.15
-			)
+			.to(coverInnerRef.value, { opacity: 0, duration: 0.6, ease: 'power2.out' }, 0)
+			.to(coverRef.value, { yPercent: -100, duration: 1.4, ease: 'power4.inOut' }, 0.3)
+			.to(coverBgRef.value, { yPercent: 35, scale: 1.18, duration: 1.4, ease: 'power4.inOut' }, 0.3)
 	}
 </script>
 
@@ -109,32 +110,38 @@
 		<div class="cover-bg">
 			<img
 				ref="coverBgRef"
-				src="https://picsum.photos/seed/kenam-cover/900/1400"
-				alt="Dian &amp; Ajeng Cover"
+				src="/1.jpeg"
+				alt="Dian &amp; Ajeng"
 			/>
 		</div>
 		<div class="cover-shade"></div>
+
 		<div
 			ref="coverInnerRef"
 			class="cover-inner"
 		>
-			<p class="cover-pre">The Wedding Of</p>
-			<h1 class="cover-names">
-				<span class="cn cn-l">Dian</span>
-				<span class="cn cn-r">&amp; Ajeng</span>
-			</h1>
-			<div class="cover-dear">
-				<p>Dear,</p>
-				<p class="guest-name">{{ guestName || 'Honored Guest' }}</p>
+			<div class="cover-top">
+				<p class="cover-pre">The Wedding of</p>
+				<h1 class="cover-names">
+					<span class="cn">Dian</span>
+					<span class="cn">&amp; Ajeng</span>
+				</h1>
 			</div>
-			<button
-				class="open-btn"
-				type="button"
-				onclick="document.body.classList.remove('lock'); document.body.classList.add('opened'); const c = document.getElementById('cover'); if(c) c.style.pointerEvents='none';"
-				@click="handleOpen"
-			>
-				Open Invitation
-			</button>
+
+			<div class="cover-bottom">
+				<div class="cover-dear">
+					<p>Dear</p>
+					<p class="guest-name">{{ props.guestName || 'Honored Guest' }}</p>
+				</div>
+				<button
+					class="open-btn"
+					type="button"
+					onclick="document.body.classList.remove('lock'); document.body.classList.add('opened'); const c = document.getElementById('cover'); if(c) c.style.pointerEvents='none';"
+					@click="handleOpen"
+				>
+					Open Invitation
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -144,12 +151,9 @@
 		position: fixed;
 		inset: 0;
 		z-index: 9999;
-		display: grid;
-		place-items: center;
-		text-align: center;
 		overflow: hidden;
 		background: #0b0a0c;
-		will-change: transform, opacity;
+		will-change: transform;
 	}
 
 	.cover.is-opening {
@@ -159,100 +163,113 @@
 	.cover-bg {
 		position: absolute;
 		inset: 0;
+		overflow: hidden;
 	}
 
 	.cover-bg img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: 50% 30%;
 		will-change: transform;
 	}
 
+	/* Darken top for the names and bottom for the guest block, keep faces clear */
 	.cover-shade {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(
-			180deg,
-			rgba(11, 10, 12, 0.75),
-			rgba(11, 10, 12, 0.45) 45%,
-			rgba(11, 10, 12, 0.88)
-		);
+		background:
+			linear-gradient(
+				180deg,
+				rgba(11, 10, 12, 0.55) 0%,
+				rgba(11, 10, 12, 0.12) 30%,
+				rgba(11, 10, 12, 0) 48%,
+				rgba(11, 10, 12, 0.35) 66%,
+				rgba(11, 10, 12, 0.85) 100%
+			);
 	}
 
 	.cover-inner {
 		position: relative;
 		z-index: 2;
-		padding: 30px;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
+		justify-content: space-between;
 		align-items: center;
-		color: var(--cream);
+		text-align: center;
+		padding: max(14vh, 70px) 24px max(9vh, 48px);
+		color: #fff;
 		will-change: transform, opacity;
 	}
 
+	.cover-top,
+	.cover-bottom {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
 	.cover-pre {
-		font: 300 12px var(--sans);
-		letter-spacing: 0.42em;
-		text-transform: uppercase;
-		color: var(--cream-60);
+		font: 300 15px var(--sans);
+		letter-spacing: 0.08em;
+		color: rgba(255, 255, 255, 0.92);
 	}
 
 	.cover-names {
 		font-family: var(--script), cursive, sans-serif;
 		font-weight: 400;
-		font-size: clamp(62px, 19vw, 92px);
-		line-height: 0.95;
-		margin: 16px 0 26px;
-		color: var(--cream);
-		text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+		font-size: clamp(60px, 17vw, 84px);
+		line-height: 0.82;
+		margin-top: 14px;
+		color: #fff;
+		text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
 	}
 
 	.cover-names .cn {
 		display: block;
+		will-change: transform, opacity;
 	}
 
+
 	.cover-dear {
-		margin-bottom: 28px;
+		margin-bottom: 22px;
 	}
 
 	.cover-dear p:first-child {
-		font: 300 11px var(--sans);
-		letter-spacing: 0.3em;
-		text-transform: uppercase;
-		color: var(--cream-60);
+		font: 300 14px var(--sans);
+		letter-spacing: 0.06em;
+		color: rgba(255, 255, 255, 0.85);
 	}
 
 	.guest-name {
-		font: 400 19px var(--serif);
-		letter-spacing: 0.16em;
+		font: 400 21px var(--sans);
+		letter-spacing: 0.04em;
 		text-transform: uppercase;
-		margin-top: 7px;
-		color: var(--cream);
+		margin-top: 8px;
+		color: #fff;
 	}
 
 	.open-btn {
-		min-width: min(300px, 84vw);
-		padding: 16px 26px;
-		border-radius: 999px;
-		border: 1px solid rgba(237, 231, 220, 0.35);
-		background: rgba(12, 11, 13, 0.55);
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
-		color: var(--cream);
-		font: 300 12px var(--sans);
-		letter-spacing: 0.34em;
+		padding: 12px 50px;
+		border: 0;
+		border-radius: 0;
+		background: rgba(255, 255, 255, 0.38);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		color: #fff;
+		font: 500 15px var(--sans);
+		letter-spacing: 0.04em;
 		text-transform: uppercase;
 		cursor: pointer;
-		transition: background 0.3s, transform 0.2s, border-color 0.3s;
+		transition: background 0.4s ease, transform 0.2s ease;
 	}
 
 	.open-btn:hover {
-		background: rgba(12, 11, 13, 0.85);
-		border-color: rgba(237, 231, 220, 0.6);
-		transform: scale(1.02);
+		background: #000;
 	}
 
 	.open-btn:active {
-		transform: scale(0.98);
+		transform: scale(0.97);
 	}
 </style>

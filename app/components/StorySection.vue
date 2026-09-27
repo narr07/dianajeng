@@ -16,7 +16,7 @@
 				<div class="story-photo">
 					<img
 						loading="lazy"
-						src="https://picsum.photos/seed/kenam-s1/720/560"
+						src="/gallery/curtain.jpg"
 						alt="When we first met"
 					/>
 				</div>
@@ -35,7 +35,7 @@
 				<div class="story-photo">
 					<img
 						loading="lazy"
-						src="https://picsum.photos/seed/kenam-s2/720/560"
+						src="/gallery/umbrella.jpg"
 						alt="Relationship"
 					/>
 				</div>
@@ -91,6 +91,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: 50% 22%;
 	}
 
 	.story-block.right .story-photo {

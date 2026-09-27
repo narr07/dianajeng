@@ -35,13 +35,13 @@
 			</div>
 			<figure class="h-card h-photo">
 				<img
-					src="https://picsum.photos/seed/kenam-h1/600/860"
+					src="/gallery/curtain.jpg"
 					alt="Gallery Moment 1"
 				/>
 			</figure>
 			<figure class="h-card h-tall">
 				<img
-					src="https://picsum.photos/seed/kenam-h2/560/960"
+					src="/ajeng.jpeg"
 					alt="Gallery Moment 2"
 				/>
 			</figure>
@@ -49,7 +49,7 @@
 				class="h-card h-photo video-card"
 			>
 				<img
-					src="https://picsum.photos/seed/kenam-h3/600/860"
+					src="/gallery/umbrella.jpg"
 					alt="Prewedding film"
 					class="video-bg"
 				/>
@@ -65,19 +65,19 @@
 			</div>
 			<figure class="h-card h-tall">
 				<img
-					src="https://picsum.photos/seed/kenam-h4/560/960"
+					src="/dian.jpeg"
 					alt="Gallery Moment 4"
 				/>
 			</figure>
 			<figure class="h-card h-photo">
 				<img
-					src="https://picsum.photos/seed/kenam-h5/600/860"
+					src="/gallery/seated.jpg"
 					alt="Gallery Moment 5"
 				/>
 			</figure>
 			<figure class="h-card h-tall">
 				<img
-					src="https://picsum.photos/seed/kenam-h6/560/960"
+					src="/1.jpeg"
 					alt="Gallery Moment 6"
 				/>
 			</figure>
@@ -127,6 +127,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: 50% 25%;
 		border-radius: 18px;
 	}
 

@@ -10,19 +10,21 @@
 					<span class="st-inner">The Groom</span>
 				</span>
 			</h2>
-			<div class="orb groom-orb slide-l">
-				<img
-					src="https://picsum.photos/seed/kenam-groom/700/860"
-					alt="Dian Hidayat - Groom"
-				/>
+			<div class="orb groom-orb">
+				<div class="orb-photo">
+					<img
+						src="/dian.jpeg"
+						alt="Dian Hidayat - Groom"
+					/>
+				</div>
 			</div>
 			<div class="slide-r">
 				<h3 class="person-name">Dian Hidayat</h3>
-				<p class="person-sub">Son of Mr. &amp; Mrs. Hidayat</p>
+				<p class="person-sub">Son of Jaenudin (Smiley) &amp; Yayah</p>
 			</div>
 			<a
 				class="ig-link slide-r"
-				href="https://instagram.com"
+				href="https://www.instagram.com/hadian0_0/"
 				target="_blank"
 				rel="noopener"
 			>
@@ -63,19 +65,21 @@
 					<span class="st-inner">The Bride</span>
 				</span>
 			</h2>
-			<div class="orb bride-orb slide-r">
-				<img
-					src="https://picsum.photos/seed/kenam-bride/700/860"
-					alt="Ajeng Fauziah - Bride"
-				/>
+			<div class="orb bride-orb">
+				<div class="orb-photo">
+					<img
+						src="/ajeng.jpeg"
+						alt="Ajeng Fauziah - Bride"
+					/>
+				</div>
 			</div>
 			<div class="slide-l">
 				<h3 class="person-name">Ajeng Fauziah</h3>
-				<p class="person-sub">Daughter of Mr. &amp; Mrs. Fauzi</p>
+				<p class="person-sub">Daughter of Tati &amp; Jaenal Abidin</p>
 			</div>
 			<a
 				class="ig-link slide-l"
-				href="https://instagram.com"
+				href="https://www.instagram.com/ajengfzh22/"
 				target="_blank"
 				rel="noopener"
 			>
@@ -151,22 +155,52 @@
 		color: var(--cream-40);
 	}
 
+	/* Arch window: photo cut into an arch, framed by a thin gold arch
+	   a few pixels out, with a small diamond at the crown */
 	.orb {
-		width: min(56vw, 240px);
-		height: clamp(180px, 32vh, 270px);
-		margin: clamp(14px, 2.5vh, 24px) auto;
-		overflow: hidden;
-		border-radius: 48% 48% 46% 46% / 42% 42% 40% 40%;
-		box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.85),
-			0 0 0 1px var(--line),
-			0 0 90px rgba(237, 231, 220, 0.08);
+		--gold: rgba(227, 192, 141, 0.7);
+		--gap: 9px;
+		position: relative;
+		width: min(58vw, 240px);
+		height: clamp(230px, 40vh, 320px);
+		margin: clamp(22px, 3.5vh, 34px) auto clamp(18px, 3vh, 28px);
 		will-change: transform, opacity;
 	}
 
-	.orb img {
+	.orb::before {
+		content: '';
+		position: absolute;
+		inset: calc(var(--gap) * -1);
+		border: 1px solid var(--gold);
+		border-radius: 999px 999px 10px 10px;
+		pointer-events: none;
+	}
+
+	.orb::after {
+		content: '';
+		position: absolute;
+		top: calc(var(--gap) * -1 - 4px);
+		left: 50%;
+		width: 7px;
+		height: 7px;
+		background: #e3c08d;
+		transform: translateX(-50%) rotate(45deg);
+		box-shadow: 0 0 10px rgba(227, 192, 141, 0.6);
+	}
+
+	.orb-photo {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		border-radius: 999px 999px 4px 4px;
+		box-shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.9);
+	}
+
+	.orb-photo img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: 50% 18%;
 	}
 
 	.ig-link {

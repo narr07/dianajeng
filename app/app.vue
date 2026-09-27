@@ -2,6 +2,8 @@
 	import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 	import { useGSAP } from '~/composables/useGSAP'
 	import { useAudio } from '~/composables/useAudio'
+	import Lenis from 'lenis'
+	import 'lenis/dist/lenis.css'
 
 	const route = useRoute()
 	const { gsap, ScrollTrigger } = useGSAP()
@@ -17,10 +19,33 @@
 	})
 
 	let ctx: gsap.Context | null = null
+	let lenis: Lenis | null = null
+
+	// Locomotive-style smooth scroll: Lenis eases the native scroll and is
+	// driven by GSAP's ticker so ScrollTrigger reads the same frame.
+	const onTick = (time: number) => lenis?.raf(time * 1000)
+
+	const initSmoothScroll = () => {
+		lenis = new Lenis({
+			duration: 1.3,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			smoothWheel: true,
+			wheelMultiplier: 0.9,
+			touchMultiplier: 1.4
+		})
+		lenis.on('scroll', ScrollTrigger.update)
+		gsap.ticker.add(onTick)
+		gsap.ticker.lagSmoothing(0)
+		// stay still while the cover is up
+		lenis.stop()
+	}
 
 	const navigateTo = (targetSelector: string) => {
 		const targetEl = document.querySelector(targetSelector)
-		if (targetEl) {
+		if (!targetEl) return
+		if (lenis) {
+			lenis.scrollTo(targetEl as HTMLElement, { duration: 1.6 })
+		} else {
 			gsap.to(window, {
 				duration: 0.85,
 				scrollTo: { y: targetEl, autoKill: false },
@@ -255,6 +280,47 @@
 				)
 			}
 
+			// Stacked photo cards: the section pins and each new card slides up
+			// over the last, which sinks back, shrinks and dims into the pile
+			const sg = document.getElementById('stack-gallery')
+			const sgCards = gsap.utils.toArray<HTMLElement>('#stack-gallery .sg-card')
+			if (sg && sgCards.length > 1) {
+				// explicit starting filter: tweening from `none` makes GSAP start
+				// brightness at 0, which flashes the cards black mid-scroll
+				gsap.set(sgCards, { filter: 'brightness(1)' })
+				gsap.set(sgCards.slice(1), { yPercent: 120, rotation: (i) => (i % 2 ? -5 : 5) })
+				const sgTl = gsap.timeline({
+					defaults: { ease: 'power2.inOut' },
+					scrollTrigger: {
+						trigger: sg,
+						start: 'top top',
+						end: () => '+=' + window.innerHeight * 0.8 * (sgCards.length - 1),
+						pin: true,
+						scrub: 0.8,
+						anticipatePin: 1,
+						invalidateOnRefresh: true
+					}
+				})
+				sgCards.slice(1).forEach((card, i) => {
+					const step = i + 1
+					sgTl.to(card, { yPercent: 0, rotation: 0, duration: 1 }, i)
+					// every card already in the pile steps back one more level
+					sgCards.slice(0, step).forEach((under, j) => {
+						const depth = step - j
+						sgTl.to(
+							under,
+							{
+								scale: 1 - depth * 0.05,
+								y: -depth * 16,
+								filter: `brightness(${Math.max(0.7, 1 - depth * 0.1)})`,
+								duration: 1
+							},
+							i
+						)
+					})
+				})
+			}
+
 			// Story photo clip path reveal
 			gsap.utils.toArray<HTMLElement>('.story-photo').forEach((box, i) => {
 				const right = i % 2 === 1
@@ -282,6 +348,120 @@
 						0
 					)
 			})
+
+			// Layered depth scenes: each [data-parallax-speed] layer inside a
+			// [data-parallax] section drifts at its own rate (1 = with the page)
+			gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+				gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((scene) => {
+					const tl = gsap.timeline({
+						scrollTrigger: {
+							trigger: scene,
+							start: 'clamp(top bottom)',
+							end: 'clamp(bottom top)',
+							scrub: true
+						}
+					})
+					scene.querySelectorAll<HTMLElement>('[data-parallax-speed]').forEach((layer) => {
+						const shift = (1 - parseFloat(layer.dataset.parallaxSpeed || '1')) * 50
+						tl.fromTo(layer, { yPercent: -shift }, { yPercent: shift, ease: 'none' }, 0)
+					})
+				})
+			})
+
+			// Read-along text: each word lights up gold as it is scrolled past,
+			// then settles to cream. Reduced motion keeps the words fully readable.
+			// With data-read-along-pin the section locks with its bottom on the
+			// screen's bottom until every word has been read, then scrolling resumes.
+			gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+				const els = gsap.utils.toArray<HTMLElement>('[data-read-along]')
+				els.forEach((el) => {
+					el.classList.add('is-live')
+					const words = el.querySelectorAll('.word')
+					const scene = el.hasAttribute('data-read-along-pin') ? el.closest('section') : null
+					const tl = gsap.timeline({
+						scrollTrigger: scene
+							? {
+									trigger: scene,
+									start: 'bottom bottom',
+									end: () => '+=' + Math.max(900, words.length * 45),
+									pin: true,
+									scrub: 0.6,
+									anticipatePin: 1,
+									invalidateOnRefresh: true,
+									// created before triggers above it; measure first so
+									// everything below accounts for the pin spacing
+									refreshPriority: 1
+								}
+							: { trigger: el, start: 'top 85%', end: 'bottom 50%', scrub: true }
+					})
+					// unread words wait low, blurred and faint; each one rises into place
+					// lit in gold, then settles to cream
+					gsap.set(words, { yPercent: 60, opacity: 0.12, filter: 'blur(6px)' })
+					words.forEach((w, i) => {
+						tl.to(
+							w,
+							{ yPercent: 0, opacity: 1, filter: 'blur(0px)', color: '#E3C08D', duration: 0.5, ease: 'power2.out' },
+							i * 0.5
+						).to(w, { color: '#EDE7DC', duration: 0.6 }, i * 0.5 + 0.5)
+					})
+				})
+				return () => els.forEach((el) => el.classList.remove('is-live'))
+			})
+
+			// Locomotive-style parallax: data-speed="0.2" drifts against the scroll
+			gsap.utils.toArray<HTMLElement>('[data-speed]').forEach((el) => {
+				const speed = parseFloat(el.dataset.speed || '0')
+				gsap.fromTo(
+					el,
+					{ y: () => -speed * window.innerHeight * 0.5 },
+					{
+						y: () => speed * window.innerHeight * 0.5,
+						ease: 'none',
+						scrollTrigger: {
+							trigger: el.closest('section') || el,
+							start: 'top bottom',
+							end: 'bottom top',
+							scrub: true,
+							invalidateOnRefresh: true
+						}
+					}
+				)
+			})
+
+			// Video section: video eases out of a zoom while the section scrolls in,
+			// then the text rises out of line masks
+			const hv = document.getElementById('home-video')
+			if (hv) {
+				gsap.fromTo(
+					hv.querySelector('video'),
+					{ scale: 1.25 },
+					{
+						scale: 1,
+						ease: 'none',
+						// finish zooming exactly when the section pins
+						scrollTrigger: { trigger: hv, start: 'top bottom', end: 'bottom bottom', scrub: true }
+					}
+				)
+				gsap.timeline({ scrollTrigger: { trigger: hv, start: 'top 60%', once: true } })
+					.from(hv.querySelectorAll('.hv-mask-in'), {
+						yPercent: 110,
+						duration: 1.3,
+						stagger: 0.12,
+						ease: 'expo.out'
+					})
+					.from(
+						hv.querySelectorAll('.hv-line'),
+						{ scaleX: 0, duration: 1.1, ease: 'expo.out' },
+						0.35
+					)
+				gsap.from(hv.querySelector('.hv-verse'), {
+					y: 16,
+					opacity: 0,
+					duration: 1.1,
+					ease: 'power3.out',
+					scrollTrigger: { trigger: hv.querySelector('.hv-verse'), start: 'top 92%', once: true }
+				})
+			}
 
 			// Navigation link section triggers
 			const navSections = [
@@ -311,6 +491,7 @@
 		document.body.classList.remove('lock')
 		document.body.classList.add('opened')
 		isOpened.value = true
+		lenis?.start()
 
 		try {
 			startMusic()
@@ -371,25 +552,6 @@
 				{ opacity: 1, y: 0, stagger: 0.1, duration: 0.9 },
 				0.6
 			)
-			// Left & right quote marks and verse
-			.fromTo(
-				'.quote-l',
-				{ x: -30, opacity: 0 },
-				{ x: 0, opacity: 1, duration: 0.8 },
-				0.8
-			)
-			.fromTo(
-				'.quote-r',
-				{ x: 30, opacity: 0 },
-				{ x: 0, opacity: 1, duration: 0.8 },
-				0.8
-			)
-			.fromTo(
-				['.hero-quote p', '.quote-verse'],
-				{ opacity: 0, y: 20 },
-				{ opacity: 1, y: 0, stagger: 0.1, duration: 0.9 },
-				0.85
-			)
 			.fromTo(
 				'.scroll-hint',
 				{ opacity: 0, y: 14 },
@@ -414,8 +576,13 @@
 	onMounted(() => {
 		document.body.classList.add('lock')
 
+		initSmoothScroll()
+
 		nextTick(() => {
 			initAnimations()
+			// triggers are created per effect, not in page order; sort them top to
+			// bottom so everything below a pinned section accounts for its spacing
+			ScrollTrigger.sort()
 			ScrollTrigger.refresh()
 		})
 	})
@@ -423,6 +590,9 @@
 	onUnmounted(() => {
 		document.body.classList.remove('lock', 'opened')
 		ctx?.revert()
+		gsap.ticker.remove(onTick)
+		lenis?.destroy()
+		lenis = null
 	})
 </script>
 
@@ -442,6 +612,8 @@
 		<main>
 			<HeroSection />
 
+			<HeroVideoSection />
+
 			<SaveTheDate />
 
 			<CoupleSection />
@@ -455,6 +627,8 @@
 			<RsvpSection />
 
 			<GallerySection />
+
+			<StackGallery />
 
 			<StorySection />
 

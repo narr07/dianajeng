@@ -4,6 +4,7 @@
 .nuxt
 .nitro
 .cache
+.tgrep
 dist
 
 # Node dependencies
@@ -22,3 +23,9 @@ logs
 .env
 .env.*
 !.env.example
+
+# Vercel
+.vercel
+
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
