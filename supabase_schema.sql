@@ -1,12 +1,20 @@
 -- Tabel ucapan & doa (Wishes)
+-- Dipakai bersama oleh website internasional dan website Indonesia.
 create table if not exists public.wishes (
   id uuid default gen_random_uuid() primary key,
-  name text not null,
-  message text not null,
-  attendance text default 'Hadir',
-  likes integer default 0,
+  name text not null check (char_length(name) between 1 and 60),
+  message text not null check (char_length(message) between 1 and 500),
+  -- kode netral, diterjemahkan oleh masing-masing website:
+  -- 'yes' = hadir, 'maybe' = mungkin, 'no' = berhalangan
+  attendance text not null default 'yes' check (attendance in ('yes', 'maybe', 'no')),
+  -- website asal ucapan: 'en' (internasional) atau 'id' (Indonesia).
+  -- Hanya informasi; kedua website menampilkan semua ucapan bersama.
+  site text not null default 'en' check (site in ('en', 'id')),
+  likes integer not null default 0 check (likes >= 0),
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
+
+create index if not exists wishes_created_at_idx on public.wishes (created_at desc);
 
 -- Aktifkan Row Level Security (RLS)
 alter table public.wishes enable row level security;

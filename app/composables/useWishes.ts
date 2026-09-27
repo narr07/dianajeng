@@ -1,10 +1,17 @@
 import { useSupabase } from '~/composables/useSupabase'
 
+// The wishes table is shared with the Indonesian site. Attendance is stored as
+// a neutral code ('yes' | 'maybe' | 'no') and each site shows its own label;
+// `site` records where a wish was written ('en' here, 'id' on the other site).
+export type Attendance = 'yes' | 'maybe' | 'no'
+const SITE = 'en'
+
 export interface WishItem {
 	id: string
 	name: string
 	message: string
 	attendance?: string
+	site?: string
 	created_at: string
 	likes: number
 }
@@ -51,13 +58,14 @@ export const useWishes = () => {
 		}
 	}
 
-	const sendWish = async (name: string, message: string, attendance = 'Attending') => {
+	const sendWish = async (name: string, message: string, attendance: Attendance = 'yes') => {
 		isSending.value = true
 		const optimistic: WishItem = {
 			id: 'opt-' + Date.now(),
 			name,
 			message,
 			attendance,
+			site: SITE,
 			created_at: new Date().toISOString(),
 			likes: 0
 		}
@@ -72,7 +80,7 @@ export const useWishes = () => {
 			if (supabase) {
 				const { data, error } = await supabase
 					.from('wishes')
-					.insert([{ name, message, attendance }])
+					.insert([{ name, message, attendance, site: SITE }])
 					.select()
 					.single()
 				if (error) throw error

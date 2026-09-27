@@ -211,13 +211,16 @@ a {
 	pointer-events: none;
 }
 
+/* The photo drifts sideways only: a little wider than the section, never
+   taller, so the couple's faces (high in the photos) stay put vertically */
 .parallax img {
 	position: absolute;
-	left: -15%;
-	top: -30%;
-	width: 130%;
-	height: 160%;
+	left: -8%;
+	top: 0;
+	width: 116%;
+	height: 100%;
 	object-fit: cover;
+	object-position: 50% 20%;
 	will-change: transform;
 }
 

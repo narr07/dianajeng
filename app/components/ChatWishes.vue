@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref, onMounted, onUnmounted, computed } from 'vue'
-	import { useWishes } from '~/composables/useWishes'
+	import { useWishes, type Attendance } from '~/composables/useWishes'
 	import { useToast } from '~/composables/useToast'
 
 	const props = defineProps<{
@@ -21,7 +21,7 @@
 
 	const name = ref(props.defaultName || '')
 	const message = ref('')
-	const attendance = ref('Attending')
+	const attendance = ref<Attendance>('yes')
 	const wishListRef = ref<HTMLElement | null>(null)
 
 	let unsubscribe: (() => void) | null = null
@@ -29,16 +29,21 @@
 	const charCount = computed(() => `${message.value.length}/300`)
 	const canSend = computed(() => !!name.value.trim() && !!message.value.trim() && !isSending.value)
 
-	const attendanceOptions = [
-		{ value: 'Attending', label: 'Attending' },
-		{ value: 'Tentative', label: 'Maybe' },
-		{ value: 'Unable to Attend', label: 'Can’t Make It' }
+	const attendanceOptions: { value: Attendance; label: string }[] = [
+		{ value: 'yes', label: 'Attending' },
+		{ value: 'maybe', label: 'Maybe' },
+		{ value: 'no', label: 'Can’t Make It' }
 	]
 
+	// Stored as a neutral code shared with the Indonesian site; older free-text
+	// values (English or Indonesian) are still understood
+	const attendanceTone = (a?: string): Attendance => {
+		if (!a || ['yes', 'Attending', 'Hadir'].includes(a)) return 'yes'
+		if (['maybe', 'Tentative', 'Mungkin', 'Masih ragu'].includes(a)) return 'maybe'
+		return 'no'
+	}
 	const attendanceLabel = (a?: string) =>
-		a === 'Hadir' ? 'Attending' : a === 'Berhalangan' ? 'Unable to Attend' : a
-	const attendanceTone = (a?: string) =>
-		a === 'Attending' || a === 'Hadir' ? 'yes' : a === 'Tentative' ? 'maybe' : 'no'
+		({ yes: 'Attending', maybe: 'Maybe', no: 'Can’t Make It' })[attendanceTone(a)]
 
 	const initials = (n: string) =>
 		n

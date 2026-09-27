@@ -78,7 +78,7 @@
 	>
 		<div class="parallax">
 			<img
-				src="/1.jpeg"
+				src="/gallery/countdown.jpg"
 				alt="Countdown Background"
 			/>
 		</div>
@@ -86,6 +86,11 @@
 		<div class="cd-content">
 			<p class="eyebrow reveal">Counting Down</p>
 			<h3 class="cd-forever reveal">Forever</h3>
+			<div class="cd-when">
+				<p class="cd-day reveal">Sunday</p>
+				<h3 class="cd-date reveal">6 December 2026</h3>
+				<p class="cd-label reveal">Wedding Day</p>
+			</div>
 			<div class="cd-timer">
 				<div class="t-cell">
 					<span ref="dayEl">{{ days }}</span>
@@ -104,12 +109,6 @@
 					<small>Seconds</small>
 				</div>
 			</div>
-			<p class="cd-day reveal">Sunday</p>
-			<h3 class="cd-date reveal">6 December 2026</h3>
-			<p class="cd-label reveal">Wedding Day</p>
-			<p class="cd-invite reveal">
-				Together with our families, we warmly invite you to celebrate our wedding.
-			</p>
 		</div>
 
 		<div class="cd-marquee-footer">
@@ -132,10 +131,19 @@
 </template>
 
 <style scoped>
+	/* Text sits in the lower part so the couple's faces above stay clear */
 	.countdown {
 		position: relative;
 		overflow: hidden;
 		text-align: center;
+		justify-content: flex-end;
+		padding-top: 34vh;
+		padding-bottom: calc(96px + env(safe-area-inset-bottom));
+	}
+
+	/* faces sit high and slightly right of centre in this photo */
+	.parallax img {
+		object-position: 55% 15%;
 	}
 
 	.cd-shade {
@@ -144,21 +152,20 @@
 		z-index: 1;
 		background: linear-gradient(
 			180deg,
-			rgba(11, 10, 12, 0.55),
-			rgba(11, 10, 12, 0.35) 40%,
-			rgba(11, 10, 12, 0.88)
+			rgba(11, 10, 12, 0.15),
+			rgba(11, 10, 12, 0.1) 22%,
+			rgba(11, 10, 12, 0.72) 42%,
+			rgba(11, 10, 12, 0.92)
 		);
 	}
 
 	.cd-content {
 		position: relative;
 		z-index: 2;
-		padding: 72px 26px;
-		min-height: 100vh;
-		min-height: 100svh;
+		padding: 0 26px;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: flex-end;
 	}
 
 	.cd-forever {
@@ -166,6 +173,34 @@
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
 		margin-top: 12px;
+	}
+
+	/* the wedding date, right above the countdown numbers */
+	.cd-when {
+		margin: clamp(10px, 2vh, 18px) 0 clamp(18px, 3vh, 26px);
+	}
+
+	.cd-day {
+		font: 300 11px var(--sans);
+		letter-spacing: 0.42em;
+		text-transform: uppercase;
+		color: var(--cream-60);
+	}
+
+	.cd-date {
+		font: 400 clamp(24px, 7.4vw, 31px) var(--serif);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		margin-top: 10px;
+	}
+
+	.cd-label {
+		margin-top: 10px;
+		font: 300 10px var(--sans);
+		letter-spacing: 0.42em;
+		text-transform: uppercase;
+		color: var(--maroon);
+		filter: brightness(1.35);
 	}
 
 	.cd-timer {
@@ -199,33 +234,7 @@
 		color: var(--cream-40);
 	}
 
-	.cd-day {
-		font: 300 11px var(--sans);
-		letter-spacing: 0.42em;
-		text-transform: uppercase;
-		color: var(--cream-60);
-	}
 
-	.cd-date {
-		font: 400 clamp(24px, 7.4vw, 31px) var(--serif);
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		margin-top: 12px;
-	}
 
-	.cd-label {
-		margin-top: 12px;
-		font: 300 10px var(--sans);
-		letter-spacing: 0.42em;
-		text-transform: uppercase;
-		color: var(--maroon);
-		filter: brightness(1.35);
-	}
 
-	.cd-invite {
-		margin: 22px auto 0;
-		font: 300 13.5px / 1.85 var(--sans);
-		color: var(--cream-60);
-		max-width: 32ch;
-	}
 </style>

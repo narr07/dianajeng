@@ -80,11 +80,40 @@
 		lenis.stop()
 	}
 
+	// Hold the page still (wheel, touch, keys, including iOS momentum) while a
+	// section plays something the guest should see before moving on.
+	let navigating = false
+	const blockScroll = (e: Event) => e.preventDefault()
+	const blockKeys = (e: KeyboardEvent) => {
+		if ([' ', 'PageDown', 'PageUp', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) e.preventDefault()
+	}
+	const holdScroll = (y: number) => {
+		lenis?.scrollTo(y, { immediate: true, force: true })
+		window.scrollTo(0, y)
+		lenis?.stop()
+		window.addEventListener('wheel', blockScroll, { passive: false })
+		window.addEventListener('touchmove', blockScroll, { passive: false })
+		window.addEventListener('keydown', blockKeys)
+	}
+	const releaseScroll = () => {
+		window.removeEventListener('wheel', blockScroll)
+		window.removeEventListener('touchmove', blockScroll)
+		window.removeEventListener('keydown', blockKeys)
+		lenis?.start()
+	}
+
 	const navigateTo = (targetSelector: string) => {
 		const targetEl = document.querySelector(targetSelector)
 		if (!targetEl) return
 		if (lenis) {
-			lenis.scrollTo(targetEl as HTMLElement, { duration: 1.6 })
+			// menu jumps pass straight through any held sections
+			navigating = true
+			lenis.scrollTo(targetEl as HTMLElement, {
+				duration: 1.6,
+				onComplete: () => {
+					navigating = false
+				}
+			})
 		} else {
 			gsap.to(window, {
 				duration: 0.85,
@@ -199,20 +228,15 @@
 					)
 			})
 
-			// Deep cinematic parallax across all section backgrounds
+			// Sideways parallax on the photo backgrounds: the photo slides left to
+			// right as the section passes, alternating direction per section
 			gsap.utils.toArray<HTMLElement>('.parallax img').forEach((img, i) => {
-				const dx = i % 2 ? 8 : -8
+				const dir = i % 2 ? -1 : 1
 				gsap.fromTo(
 					img,
+					{ xPercent: -5 * dir },
 					{
-						yPercent: -26,
-						xPercent: dx,
-						scale: 1.2
-					},
-					{
-						yPercent: 26,
-						xPercent: -dx,
-						scale: 1.02,
+						xPercent: 5 * dir,
 						ease: 'none',
 						scrollTrigger: {
 							trigger: img.closest('.snap') || img.parentElement,
@@ -276,34 +300,6 @@
 				}
 			})
 
-			// Story photo clip path reveal
-			gsap.utils.toArray<HTMLElement>('.story-photo').forEach((box, i) => {
-				const right = i % 2 === 1
-				const from = right
-					? 'inset(0% 0% 0% 100% round 18px)'
-					: 'inset(0% 100% 0% 0% round 18px)'
-				gsap.timeline({ scrollTrigger: { trigger: box, start: 'top 84%', toggleActions: 'play none none reverse' } })
-					.fromTo(
-						box,
-						{ clipPath: from },
-						{
-							clipPath: 'inset(0% 0% 0% 0% round 18px)',
-							duration: 1.1,
-							ease: 'power3.inOut'
-						}
-					)
-					.from(
-						box.querySelector('img'),
-						{
-							scale: 1.25,
-							xPercent: right ? 8 : -8,
-							duration: 1.5,
-							ease: 'power2.out'
-						},
-						0
-					)
-			})
-
 			// Layered depth scenes: each [data-parallax-speed] layer inside a
 			// [data-parallax] section drifts at its own rate (1 = with the page)
 			gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
@@ -323,35 +319,56 @@
 				})
 			})
 
-			// Read-along text: each word lights up gold as it is scrolled past,
-			// then settles to cream. Reduced motion keeps the words fully readable.
-			// With data-read-along-pin the section locks with its bottom on the
-			// screen's bottom until every word has been read, then scrolling resumes.
+			// Read-along text: unread words wait low, blurred and faint; each one
+			// rises into place lit in gold, then settles to cream. Reduced motion
+			// keeps the words fully readable.
+			//
+			// With data-read-along-pin the verse plays by itself once its section
+			// fills the screen, and the page is held still until the last word is in.
+			// (Scroll-scrubbing it failed on iPhone: a single momentum flick shot
+			// past the whole pinned distance.)
 			gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
 				const els = gsap.utils.toArray<HTMLElement>('[data-read-along]')
 				els.forEach((el) => {
 					el.classList.add('is-live')
 					const words = el.querySelectorAll('.word')
-					const scene = el.hasAttribute('data-read-along-pin') ? el.closest('section') : null
-					const tl = gsap.timeline({
-						scrollTrigger: scene
-							? {
-									trigger: scene,
-									start: 'bottom bottom',
-									end: () => '+=' + Math.max(900, words.length * 45),
-									pin: true,
-									scrub: 0.6,
-									anticipatePin: 1,
-									invalidateOnRefresh: true,
-									// created before triggers above it; measure first so
-									// everything below accounts for the pin spacing
-									refreshPriority: 1
-								}
-							: { trigger: el, start: 'top 85%', end: 'bottom 50%', scrub: true }
-					})
-					// unread words wait low, blurred and faint; each one rises into place
-					// lit in gold, then settles to cream
 					gsap.set(words, { yPercent: 60, opacity: 0.12, filter: 'blur(6px)' })
+					const scene = el.hasAttribute('data-read-along-pin') ? el.closest('section') : null
+
+					if (scene) {
+						const tl = gsap.timeline({ paused: true, onComplete: releaseScroll })
+						words.forEach((w, i) => {
+							tl.to(
+								w,
+								{ yPercent: 0, opacity: 1, filter: 'blur(0px)', color: '#E3C08D', duration: 0.5, ease: 'power2.out' },
+								i * 0.12
+							).to(w, { color: '#EDE7DC', duration: 0.5 }, i * 0.12 + 0.45)
+						})
+						ScrollTrigger.create({
+							trigger: scene,
+							start: 'bottom bottom',
+							onEnter: (self) => {
+								if (tl.progress() > 0) return
+								if (navigating) {
+									tl.progress(1)
+									return
+								}
+								// 1px past the start so the trigger counts as active and
+								// scrolling back up fires onLeaveBack
+								holdScroll(self.start + 1)
+								tl.play(0)
+							},
+							// scrolled back above it: hide the words so it plays again
+							onLeaveBack: () => {
+								tl.pause(0)
+							}
+						})
+						return
+					}
+
+					const tl = gsap.timeline({
+						scrollTrigger: { trigger: el, start: 'top 85%', end: 'bottom 50%', scrub: true }
+					})
 					words.forEach((w, i) => {
 						tl.to(
 							w,
@@ -360,7 +377,10 @@
 						).to(w, { color: '#EDE7DC', duration: 0.6 }, i * 0.5 + 0.5)
 					})
 				})
-				return () => els.forEach((el) => el.classList.remove('is-live'))
+				return () => {
+					releaseScroll()
+					els.forEach((el) => el.classList.remove('is-live'))
+				}
 			})
 
 			// Locomotive-style parallax: data-speed="0.2" drifts against the scroll
@@ -453,26 +473,13 @@
 			console.warn('Audio start deferred:', e)
 		}
 
-		// Hero reveal animation with left & right floating photos and split typography
+		// Hero reveal animation with split typography
 		gsap.timeline({ defaults: { ease: 'power3.out' } })
 			.fromTo(
 				'.hero > .parallax img',
 				{ scale: 1.35 },
 				{ scale: 1, duration: 2.0, ease: 'power2.out' },
 				0
-			)
-			// Floating photos sweep in from left and right
-			.fromTo(
-				'.h-float-l',
-				{ x: -110, opacity: 0, rotation: -16 },
-				{ x: 0, opacity: 1, rotation: -6, duration: 1.3, ease: 'back.out(1.2)' },
-				0.2
-			)
-			.fromTo(
-				'.h-float-r',
-				{ x: 110, opacity: 0, rotation: 16 },
-				{ x: 0, opacity: 1, rotation: 6, duration: 1.3, ease: 'back.out(1.2)' },
-				0.3
 			)
 			// Couple names enter from left and right
 			.fromTo(
@@ -544,6 +551,7 @@
 	onUnmounted(() => {
 		document.body.classList.remove('lock', 'opened')
 		ctx?.revert()
+		releaseScroll()
 		gsap.ticker.remove(onTick)
 		lenis?.destroy()
 		lenis = null
@@ -580,8 +588,6 @@
 			<EventsSection />
 
 			<LiveStreaming />
-
-			<StorySection />
 
 			<!-- Interactive Real-time Chat & Wishes -->
 			<ChatWishes :default-name="guestName !== 'Honored Guest' ? guestName : ''" />

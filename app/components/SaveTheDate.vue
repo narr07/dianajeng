@@ -63,7 +63,7 @@
 								alt="Dian &amp; Ajeng Save the Date"
 							/>
 							<div class="sd-card-glass">
-								<span>Majalengka, West Java </br> Indonesia</span>
+								<span>Rajagaluh, Majalengka<br />West Java, Indonesia</span>
 							</div>
 						</div>
 					</div>

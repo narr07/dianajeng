@@ -34,31 +34,6 @@
 			</div>
 		</div>
 
-		<!-- Bride & groom photos -->
-		<div
-			class="hero-floats"
-			aria-hidden="true"
-		>
-			<div class="h-float h-float-l">
-				<div class="h-float-inner">
-					<img
-						src="/dian.jpeg"
-						alt="Dian Hidayat"
-					/>
-					<div class="h-float-tag">Dian Hidayat</div>
-				</div>
-			</div>
-			<div class="h-float h-float-r">
-				<div class="h-float-inner">
-					<img
-						src="/ajeng.jpeg"
-						alt="Ajeng Fauziah"
-					/>
-					<div class="h-float-tag">Ajeng Fauziah</div>
-				</div>
-			</div>
-		</div>
-
 		<div class="scroll-hint">
 			<span class="hint-label">Scroll to Explore</span>
 			<span class="hint-line">
@@ -88,84 +63,20 @@
 		z-index: 1;
 		background: linear-gradient(
 			180deg,
-			rgba(11, 10, 12, 0.65),
-			rgba(11, 10, 12, 0.25) 35%,
-			rgba(11, 10, 12, 0.2) 60%,
-			rgba(11, 10, 12, 0.88)
+			rgba(11, 10, 12, 0.25),
+			rgba(11, 10, 12, 0.05) 30%,
+			rgba(11, 10, 12, 0.55) 58%,
+			rgba(11, 10, 12, 0.9)
 		);
 		pointer-events: none;
 	}
 
-	/* Bride & groom photos */
-	.hero-floats {
-		position: relative;
-		z-index: 2;
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-		gap: clamp(12px, 4vw, 22px);
-		width: 100%;
-		margin: clamp(28px, 5vh, 48px) 0 clamp(16px, 3vh, 28px);
-		pointer-events: none;
-	}
-
-	.h-float {
-		width: clamp(130px, 40vw, 190px);
-		aspect-ratio: 3 / 4;
-		will-change: transform, opacity;
-	}
-
-	.h-float-l {
-		transform: rotate(-6deg);
-	}
-
-	.h-float-r {
-		margin-top: clamp(22px, 6vw, 36px);
-		transform: rotate(6deg);
-	}
-
-	.h-float-inner {
-		position: relative;
-		width: 100%;
-		height: 100%;
-		border-radius: 16px;
-		overflow: hidden;
-		border: 1px solid rgba(237, 231, 220, 0.28);
-		box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85),
-			0 0 30px rgba(237, 231, 220, 0.08);
-	}
-
-	.h-float-inner img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: 50% 22%;
-	}
-
-	.h-float-tag {
-		position: absolute;
-		bottom: 6px;
-		left: 6px;
-		right: 6px;
-		background: rgba(11, 10, 12, 0.65);
-		backdrop-filter: blur(4px);
-		-webkit-backdrop-filter: blur(4px);
-		border-radius: 999px;
-		font: 300 9.5px var(--sans);
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		text-align: center;
-		padding: 3px 6px;
-		color: var(--cream);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
+	/* names sit low, over the batik, so the faces at the top stay clear */
 	.hero-content {
 		position: relative;
 		z-index: 3;
-		margin-top: clamp(40px, 10vh, 80px);
+		margin-top: auto;
+		margin-bottom: clamp(18px, 4vh, 36px);
 		text-align: center;
 		padding: 0 16px;
 		width: 100%;
