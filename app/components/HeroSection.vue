@@ -177,8 +177,9 @@
 
 	.hero-names {
 		font-family: var(--script);
+		font-style: italic;
 		font-weight: 400;
-		font-size: clamp(54px, 16vw, 76px);
+		font-size: clamp(36px, 10.5vw, 50px);
 		line-height: 1.05;
 		margin-top: 10px;
 		display: flex;

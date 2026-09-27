@@ -40,23 +40,23 @@
 					class="sd-left"
 					data-parallax-speed="0.95"
 				>
-					<p class="eyebrow slide-l">Wedding Announcement</p>
+					<p class="eyebrow sd-in">Wedding Announcement</p>
 					<div
 						class="sd-date"
 						aria-label="6 December 2026"
 					>
-						<span class="sd-r sd-num-l">06</span>
-						<span class="sd-r sd-num-r">DEC</span>
-						<span class="sd-r sd-num-l">2026</span>
+						<span class="sd-r sd-in">06</span>
+						<span class="sd-r sd-in">DEC</span>
+						<span class="sd-r sd-in">2026</span>
 					</div>
-					<p class="sd-script slide-l">Save the date</p>
+					<p class="sd-script sd-in">Save the date</p>
 				</div>
 
 				<div
 					class="sd-right"
 					data-parallax-speed="1.4"
 				>
-					<div class="sd-photo-card slide-r">
+					<div class="sd-photo-card sd-in">
 						<div class="sd-photo-inner">
 							<img
 								src="/gallery/umbrella.jpg"
@@ -176,7 +176,8 @@
 
 	.sd-script {
 		font-family: var(--script);
-		font-size: clamp(34px, 9vw, 44px);
+		font-style: italic;
+		font-size: clamp(24px, 6.8vw, 30px);
 		opacity: 0.95;
 		margin-top: 4px;
 	}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, onMounted, onUnmounted } from 'vue'
+	import { ref, watch, onMounted, onUnmounted } from 'vue'
 	import gsap from 'gsap'
 
 	const props = defineProps<{
@@ -19,10 +19,13 @@
 	let introTl: gsap.core.Timeline | null = null
 	let breathe: gsap.core.Tween | null = null
 
+	// The intro waits for the splash screen to lift
+	const splashDone = useState<boolean>('splash-done', () => false)
+
 	onMounted(() => {
 		if (!coverRef.value) return
 
-		introTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+		introTl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } })
 		introTl
 			// Photo slowly settles in
 			.fromTo(
@@ -62,8 +65,19 @@
 			ease: 'sine.inOut',
 			yoyo: true,
 			repeat: -1,
-			delay: 2.8
+			delay: 2.8,
+			paused: true
 		})
+
+		watch(
+			splashDone,
+			(done) => {
+				if (!done) return
+				introTl?.play()
+				breathe?.play()
+			},
+			{ immediate: true }
+		)
 	})
 
 	onUnmounted(() => {
@@ -110,7 +124,7 @@
 		<div class="cover-bg">
 			<img
 				ref="coverBgRef"
-				src="/1.jpeg"
+				src="/cover.jpeg"
 				alt="Dian &amp; Ajeng"
 			/>
 		</div>
@@ -160,17 +174,27 @@
 		pointer-events: none !important;
 	}
 
+	/* The photo sits a little lower than the screen so the couple's faces stay
+	   clear of the names; the gap above is the same backdrop colour as the
+	   studio wall, and the photo's top edge fades into it. */
 	.cover-bg {
 		position: absolute;
 		inset: 0;
 		overflow: hidden;
+		background: rgb(89, 76, 60);
 	}
 
 	.cover-bg img {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
 		width: 100%;
-		height: 100%;
+		height: 88%;
 		object-fit: cover;
-		object-position: 50% 30%;
+		object-position: 53% 100%;
+		-webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%);
+		mask-image: linear-gradient(180deg, transparent 0, #000 14%);
 		will-change: transform;
 	}
 
@@ -203,6 +227,37 @@
 		will-change: transform, opacity;
 	}
 
+	/* Wide screens: a portrait photo stretched edge to edge only shows the
+	   couple's feet. Keep the phone composition in a centred column and fill
+	   the sides with a blurred copy of the same photo. */
+	@media (min-width: 600px) {
+		.cover::before {
+			content: '';
+			position: absolute;
+			inset: -40px;
+			background: url('/cover.jpeg') center 30% / cover no-repeat;
+			z-index: 0;
+			filter: blur(28px) brightness(0.45) saturate(1.1);
+		}
+
+		.cover-bg {
+			left: 50%;
+			right: auto;
+			width: min(100%, 480px);
+			translate: -50% 0;
+			z-index: 1;
+			box-shadow: 0 0 80px rgba(0, 0, 0, 0.6);
+		}
+
+		.cover-shade {
+			left: 50%;
+			right: auto;
+			width: min(100%, 480px);
+			translate: -50% 0;
+			z-index: 1;
+		}
+	}
+
 	.cover-top,
 	.cover-bottom {
 		display: flex;
@@ -217,10 +272,11 @@
 	}
 
 	.cover-names {
-		font-family: var(--script), cursive, sans-serif;
+		font-family: var(--script), Georgia, serif;
+		font-style: italic;
 		font-weight: 400;
-		font-size: clamp(60px, 17vw, 84px);
-		line-height: 0.82;
+		font-size: clamp(42px, 12vw, 56px);
+		line-height: 1.08;
 		margin-top: 14px;
 		color: #fff;
 		text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);

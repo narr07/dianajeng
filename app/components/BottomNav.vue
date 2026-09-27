@@ -84,9 +84,9 @@
 			<span>Event</span>
 		</a>
 		<a
-			href="#gallery"
-			:class="{ active: activeSection === 'gallery' }"
-			@click="(e) => handleClick(e, '#gallery')"
+			href="#wishes-section"
+			:class="{ active: activeSection === 'wishes' }"
+			@click="(e) => handleClick(e, '#wishes-section')"
 		>
 			<svg
 				viewBox="0 0 24 24"
@@ -96,45 +96,10 @@
 				stroke-linecap="round"
 				stroke-linejoin="round"
 			>
-				<rect
-					x="3.5"
-					y="4.5"
-					width="17"
-					height="15"
-					rx="2.5"
-				/>
-				<circle
-					cx="9"
-					cy="10"
-					r="1.6"
-				/>
-				<path d="M4.5 17.5l4.5-4 3 2.5 3.5-3.5 4 4" />
+				<path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20l1-4.4A7.5 7.5 0 1 1 20 12.5z" />
+				<path d="M12 15.2l-2.6-2.4a1.6 1.6 0 0 1 2.6-1.9 1.6 1.6 0 0 1 2.6 1.9z" />
 			</svg>
-			<span>Gallery</span>
-		</a>
-		<a
-			href="#gift"
-			:class="{ active: activeSection === 'gift' }"
-			@click="(e) => handleClick(e, '#gift')"
-		>
-			<svg
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="1.5"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<rect
-					x="4"
-					y="8"
-					width="16"
-					height="4"
-					rx="1"
-				/>
-				<path d="M6 12v8h12v-8M12 8v12M12 8s-4.5.2-4.5-2.5C7.5 3.6 12 4.5 12 8zm0 0s4.5.2 4.5-2.5C16.5 3.6 12 4.5 12 8z" />
-			</svg>
-			<span>Gift</span>
+			<span>Wishes</span>
 		</a>
 	</nav>
 </template>

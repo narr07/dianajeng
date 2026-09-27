@@ -156,8 +156,9 @@
 
 	.hv-names {
 		font-family: var(--script);
+		font-style: italic;
 		font-weight: 400;
-		font-size: clamp(54px, 16vw, 76px);
+		font-size: clamp(36px, 10.5vw, 50px);
 		line-height: 1.05;
 		margin-top: 10px;
 	}
@@ -195,16 +196,27 @@
 	.hv-quote {
 		position: relative;
 		z-index: 3;
+		isolation: isolate;
 		text-align: center;
 		padding: 22px 24px 18px;
 		max-width: 380px;
 		margin: 0 4px 8px;
+	}
+
+	/* The blur lives on its own layer behind the text: Safari stops repainting
+	   animated children of an element that itself has backdrop-filter. */
+	.hv-quote::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
 		border-radius: 18px;
 		background: rgba(11, 10, 12, 0.55);
 		backdrop-filter: blur(10px);
 		-webkit-backdrop-filter: blur(10px);
 		border: 1px solid rgba(237, 231, 220, 0.14);
 		box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.7);
+		pointer-events: none;
 	}
 
 	.hv-mark {
@@ -218,7 +230,9 @@
 	}
 
 	.hv-quote p {
-		font: italic 300 clamp(13.5px, 2.2vh, 15.5px) / 1.75 var(--serif);
+		/* upright and heavier than the old thin italic: easier to read over video */
+		font: 500 clamp(16px, 2.4vh, 18px) / 1.7 var(--serif);
+		letter-spacing: 0.01em;
 		color: var(--cream);
 	}
 
@@ -226,7 +240,6 @@
 	.hv-read .word {
 		display: inline-block;
 		color: var(--cream);
-		will-change: transform, opacity, filter;
 	}
 
 	.hv-read.is-live .word {

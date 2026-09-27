@@ -25,5 +25,10 @@ create policy "Allow public update likes"
   using (true)
   with check (true);
 
+-- Batasi update hanya ke kolom likes, supaya tamu tidak bisa mengubah
+-- nama atau pesan milik orang lain
+revoke update on public.wishes from anon, authenticated;
+grant update (likes) on public.wishes to anon, authenticated;
+
 -- Aktifkan Supabase Realtime untuk tabel wishes
 alter publication supabase_realtime add table public.wishes;

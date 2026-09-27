@@ -72,7 +72,8 @@
 
 	.closing-script {
 		font-family: var(--script);
-		font-size: clamp(44px, 12vw, 54px);
+		font-style: italic;
+		font-size: clamp(30px, 8.5vw, 38px);
 		margin-top: 10px;
 	}
 

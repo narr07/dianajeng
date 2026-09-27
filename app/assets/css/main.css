@@ -9,7 +9,7 @@
 	--maroon: #B32539;
 	--serif: 'Cormorant Garamond', Georgia, serif;
 	--sans: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
-	--script: 'Italianno', cursive;
+	--script: 'Playfair Display', Georgia, serif;
 	color-scheme: dark;
 }
 
@@ -127,9 +127,10 @@ a {
 
 .script-title {
 	font-family: var(--script);
+	font-style: italic;
 	font-weight: 400;
-	font-size: clamp(44px, 7vh, 64px);
-	line-height: 1.1;
+	font-size: clamp(32px, 4.8vh, 42px);
+	line-height: 1.15;
 	color: var(--cream);
 	margin-bottom: 6px;
 }
