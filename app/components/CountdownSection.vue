@@ -76,13 +76,15 @@
 		class="countdown snap"
 		id="event"
 	>
-		<div class="parallax">
-			<img
-				src="/gallery/countdown.jpg"
-				alt="Countdown Background"
-			/>
-		</div>
-		<div class="cd-shade"></div>
+		<div
+			class="deco-bg"
+			aria-hidden="true"
+		></div>
+		<div
+			class="deco-pattern"
+			data-speed="0.12"
+			aria-hidden="true"
+		></div>
 		<div class="cd-content">
 			<p class="eyebrow reveal">Counting Down</p>
 			<h3 class="cd-forever reveal">Forever</h3>
@@ -131,32 +133,19 @@
 </template>
 
 <style scoped>
-	/* Text sits in the lower part so the couple's faces above stay clear */
 	.countdown {
 		position: relative;
 		overflow: hidden;
 		text-align: center;
-		justify-content: flex-end;
-		padding-top: 34vh;
+		justify-content: center;
+		padding-top: clamp(56px, 10vh, 90px);
 		padding-bottom: calc(96px + env(safe-area-inset-bottom));
 	}
 
-	/* faces sit high and slightly right of centre in this photo */
-	.parallax img {
-		object-position: 55% 15%;
-	}
-
-	.cd-shade {
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		background: linear-gradient(
-			180deg,
-			rgba(11, 10, 12, 0.15),
-			rgba(11, 10, 12, 0.1) 22%,
-			rgba(11, 10, 12, 0.72) 42%,
-			rgba(11, 10, 12, 0.92)
-		);
+	/* centre the batik lattice behind the countdown itself */
+	.deco-pattern {
+		-webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 46%, #000 15%, transparent 76%);
+		mask-image: radial-gradient(ellipse 80% 55% at 50% 46%, #000 15%, transparent 76%);
 	}
 
 	.cd-content {

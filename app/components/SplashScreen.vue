@@ -2,8 +2,8 @@
 	import { ref, onMounted, onUnmounted } from 'vue'
 	import gsap from 'gsap'
 
-	// Shown on first load while the photos and fonts arrive. The video and music
-	// are not waited for: they keep loading in the background behind the cover.
+	// Shown on first load while the photos and fonts arrive. The music
+	// is not waited for: it keeps loading in the background behind the cover.
 	const splashDone = useState<boolean>('splash-done', () => false)
 
 	const rootRef = ref<HTMLElement | null>(null)

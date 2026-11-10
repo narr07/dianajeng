@@ -224,6 +224,33 @@ a {
 	will-change: transform;
 }
 
+/* Photo-free section backdrop: maroon light from above, a warm gold breath
+   from below, over the page's own dark tone */
+.deco-bg {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(120% 62% at 50% 0%, rgba(179, 37, 57, 0.3), transparent 64%),
+		radial-gradient(90% 46% at 50% 100%, rgba(227, 192, 141, 0.07), transparent 72%),
+		linear-gradient(180deg, #170c10, var(--bg) 58%, #110b0d);
+}
+
+/* Kawung batik lattice in faint gold, fading out toward every edge so it can
+   drift with the scroll without ever showing a hard border */
+.deco-pattern {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0.11;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44' fill='none' stroke='%23E3C08D' stroke-width='.8'%3E%3Cellipse cx='11' cy='11' rx='11' ry='5.5' transform='rotate(45 11 11)'/%3E%3Cellipse cx='33' cy='11' rx='11' ry='5.5' transform='rotate(-45 33 11)'/%3E%3Cellipse cx='11' cy='33' rx='11' ry='5.5' transform='rotate(-45 11 33)'/%3E%3Cellipse cx='33' cy='33' rx='11' ry='5.5' transform='rotate(45 33 33)'/%3E%3Ccircle cx='22' cy='22' r='1.4' fill='%23E3C08D' stroke='none'/%3E%3C/svg%3E");
+	background-size: 44px 44px;
+	background-position: center top;
+	-webkit-mask-image: radial-gradient(ellipse 78% 58% at 50% 38%, #000 18%, transparent 76%);
+	mask-image: radial-gradient(ellipse 78% 58% at 50% 38%, #000 18%, transparent 76%);
+	will-change: transform;
+}
+
 /* ============ FORM FIELDS ============ */
 .f-label {
 	display: flex;

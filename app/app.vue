@@ -403,38 +403,21 @@
 				)
 			})
 
-			// Video section: video eases out of a zoom while the section scrolls in,
-			// then the text rises out of line masks
-			const hv = document.getElementById('home-video')
-			if (hv) {
-				gsap.fromTo(
-					hv.querySelector('video'),
-					{ scale: 1.25 },
-					{
-						scale: 1,
-						ease: 'none',
-						// finish zooming exactly when the section pins
-						scrollTrigger: { trigger: hv, start: 'top bottom', end: 'bottom bottom', scrub: true }
-					}
-				)
-				gsap.timeline({ scrollTrigger: { trigger: hv, start: 'top 60%', toggleActions: 'play none none reverse' } })
-					.from(hv.querySelectorAll('.hv-mask-in'), {
-						yPercent: 110,
-						duration: 1.3,
-						stagger: 0.12,
-						ease: 'expo.out'
-					})
-					.from(
-						hv.querySelectorAll('.hv-line'),
-						{ scaleX: 0, duration: 1.1, ease: 'expo.out' },
-						0.35
-					)
-				gsap.from(hv.querySelector('.hv-verse'), {
+			// Verse section: the rules grow in and the citation rises once it is on screen
+			const vs = document.getElementById('verse')
+			if (vs) {
+				gsap.from(vs.querySelectorAll('.vs-line'), {
+					scaleY: 0,
+					duration: 1.1,
+					ease: 'expo.out',
+					scrollTrigger: { trigger: vs, start: 'top 60%', toggleActions: 'play none none reverse' }
+				})
+				gsap.from(vs.querySelector('.vs-verse'), {
 					y: 16,
 					opacity: 0,
 					duration: 1.1,
 					ease: 'power3.out',
-					scrollTrigger: { trigger: hv.querySelector('.hv-verse'), start: 'top 92%', toggleActions: 'play none none reverse' }
+					scrollTrigger: { trigger: vs.querySelector('.vs-verse'), start: 'top 92%', toggleActions: 'play none none reverse' }
 				})
 			}
 
@@ -577,7 +560,7 @@
 		<main>
 			<HeroSection />
 
-			<HeroVideoSection />
+			<VerseSection />
 
 			<SaveTheDate />
 

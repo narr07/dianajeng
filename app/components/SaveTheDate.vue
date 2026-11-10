@@ -9,13 +9,15 @@
 	>
 		<!-- Depth layers: lower speed = further away -->
 		<div
+			class="deco-bg"
+			aria-hidden="true"
+		></div>
+		<div
 			class="sd-layer sd-bg"
 			data-parallax-speed="0.3"
+			aria-hidden="true"
 		>
-			<img
-				src="/gallery/seated.jpg"
-				alt="Save The Date Background"
-			/>
+			<div class="deco-pattern"></div>
 		</div>
 		<div class="sd-shade"></div>
 		<div
@@ -103,10 +105,8 @@
 		z-index: 0;
 	}
 
-	.sd-bg img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+	.sd-bg .deco-pattern {
+		opacity: 0.13;
 	}
 
 	.sd-glow {
@@ -135,9 +135,8 @@
 		z-index: 1;
 		background: linear-gradient(
 			180deg,
-			rgba(11, 10, 12, 0.45),
-			rgba(11, 10, 12, 0.15) 40%,
-			rgba(11, 10, 12, 0.92) 80%
+			transparent 42%,
+			rgba(11, 10, 12, 0.8) 82%
 		);
 		pointer-events: none;
 	}
